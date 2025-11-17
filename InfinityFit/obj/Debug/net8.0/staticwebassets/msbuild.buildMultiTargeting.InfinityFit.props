@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\InfinityFit.props" />
-</Project>
