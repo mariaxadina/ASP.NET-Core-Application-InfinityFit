@@ -1,32 +1,15 @@
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-
 
 namespace InfinityFit.Models
 {
-    
-    public class Appreciation
+    public class Appreciation : BaseObject
     {
-        [Key]
-        public int AppreciationId { get; set; }
+        public required string UserId { get; set; } // FK → User
+        public required Guid PostId { get; set; }   // FK → Post
 
-
-        [Required]
-        public required string UserId { get; set; } // FK către AppUser
-        [Required]
-        public required int PostId { get; set; } // FK către Post
-        
-        public DateTime Date { get; set; } = DateTime.UtcNow;
-
-        // Proprietăți de Navigare
         public required User User { get; set; }
         public required Post Post { get; set; }
+
+        public DateTime Date { get; set; } = DateTime.UtcNow;
     }
-
-
-
-
 }

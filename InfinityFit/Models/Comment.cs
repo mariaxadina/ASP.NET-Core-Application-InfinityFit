@@ -1,29 +1,19 @@
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace InfinityFit.Models
 {
-
- public class Comment
+    public class Comment : BaseObject
     {
-        [Key]
-        public int Id { get; set; }
-        
         [Required]
-        public required string Content { get; set;}
-        
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public required string Content { get; set; }
 
-    
-        public  required string UserId { get; set; } // FK către AppUser
-        public required int PostId { get; set; } // FK către Post
+        public required string UserId { get; set; } // FK → User
+        public required Guid PostId { get; set; }   // FK → Post
 
-        // Proprietăți de Navigare
         public required User User { get; set; }
-        public  required Post Post { get; set; }
+        public required Post Post { get; set; }
+
+        public DateTime Date { get; set; } = DateTime.UtcNow;
     }
 }
-
-
