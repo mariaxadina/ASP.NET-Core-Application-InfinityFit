@@ -18,9 +18,9 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Appreciation> Apreciations { get; set; }
 
-        // Harta și Localizarea
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<City> Cities { get; set; }
+    // Harta și Localizarea
+    public DbSet<Location> Locations { get; set; }
+    public DbSet<City> Cities { get; set; }
 
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
