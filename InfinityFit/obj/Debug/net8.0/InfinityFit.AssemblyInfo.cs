@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InfinityFit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99057ecf6eee482f964c9d5123448f52db074333")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+166b330cc5cfbc85dc82afc1027a088e991c8586")]
 [assembly: System.Reflection.AssemblyProductAttribute("InfinityFit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InfinityFit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
