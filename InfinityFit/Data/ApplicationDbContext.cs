@@ -18,8 +18,6 @@ namespace InfinityFit.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Appreciation> Apreciations { get; set; }
 
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

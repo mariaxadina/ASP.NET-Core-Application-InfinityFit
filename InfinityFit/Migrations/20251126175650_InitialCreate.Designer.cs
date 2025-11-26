@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfinityFit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251122151848_InitialCreate")]
+    [Migration("20251126175650_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace InfinityFit.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.13")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -76,29 +76,6 @@ namespace InfinityFit.Migrations
                     b.ToTable("Badges");
                 });
 
-            modelBuilder.Entity("InfinityFit.Models.City", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ExternalApiId")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("InfinityFit.Models.Comment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -131,34 +108,6 @@ namespace InfinityFit.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("InfinityFit.Models.Location", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ExternalApiId")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Locations");
-                });
-
             modelBuilder.Entity("InfinityFit.Models.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -175,16 +124,18 @@ namespace InfinityFit.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Imagepath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
 
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
                     b.Property<string>("Title")
                         .HasMaxLength(200)
@@ -195,8 +146,6 @@ namespace InfinityFit.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("UserId");
 
@@ -480,28 +429,13 @@ namespace InfinityFit.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("InfinityFit.Models.Location", b =>
-                {
-                    b.HasOne("InfinityFit.Models.City", null)
-                        .WithMany("Locations")
-                        .HasForeignKey("CityId");
-                });
-
             modelBuilder.Entity("InfinityFit.Models.Post", b =>
                 {
-                    b.HasOne("InfinityFit.Models.Location", "Location")
-                        .WithMany("Posts")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("InfinityFit.Models.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Location");
 
                     b.Navigation("User");
                 });
@@ -579,16 +513,6 @@ namespace InfinityFit.Migrations
             modelBuilder.Entity("InfinityFit.Models.Badge", b =>
                 {
                     b.Navigation("UserBadges");
-                });
-
-            modelBuilder.Entity("InfinityFit.Models.City", b =>
-                {
-                    b.Navigation("Locations");
-                });
-
-            modelBuilder.Entity("InfinityFit.Models.Location", b =>
-                {
-                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("InfinityFit.Models.Post", b =>
