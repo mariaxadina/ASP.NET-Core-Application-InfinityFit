@@ -22,7 +22,7 @@ namespace InfinityFit.Models
 
         public required User User { get; set; }
         
-        public double Latitude { get; set; }
+        public double Latitude { get; set; } // locatia
         public double Longitude { get; set; }
 
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
