@@ -2,7 +2,7 @@ using System;
 
 namespace InfinityFit.Models
 {
-    public class Appreciation : BaseObject
+    public class Like : BaseObject
     {
         public required string UserId { get; set; } // FK → User
         public required Guid PostId { get; set; }   // FK → Post

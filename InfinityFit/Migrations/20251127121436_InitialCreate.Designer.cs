@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfinityFit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251126175650_InitialCreate")]
+    [Migration("20251127121436_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,38 +20,10 @@ namespace InfinityFit.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("InfinityFit.Models.Appreciation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Apreciations");
-                });
 
             modelBuilder.Entity("InfinityFit.Models.Badge", b =>
                 {
@@ -59,7 +31,7 @@ namespace InfinityFit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -86,10 +58,10 @@ namespace InfinityFit.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("PostId")
@@ -108,13 +80,41 @@ namespace InfinityFit.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("InfinityFit.Models.Like", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("InfinityFit.Models.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DatePosted")
@@ -124,7 +124,7 @@ namespace InfinityFit.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<string>("Imagepath")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -164,7 +164,7 @@ namespace InfinityFit.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Daily_Distance_Goal")
+                    b.Property<float>("DailyDistanceGoal")
                         .HasColumnType("real");
 
                     b.Property<string>("Email")
@@ -235,10 +235,10 @@ namespace InfinityFit.Migrations
                     b.Property<Guid>("BadgeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DateAwarded")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateAwarded")
+                    b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
@@ -391,25 +391,6 @@ namespace InfinityFit.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("InfinityFit.Models.Appreciation", b =>
-                {
-                    b.HasOne("InfinityFit.Models.Post", "Post")
-                        .WithMany("Apreciations")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("InfinityFit.Models.User", "User")
-                        .WithMany("Apreciations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("InfinityFit.Models.Comment", b =>
                 {
                     b.HasOne("InfinityFit.Models.Post", "Post")
@@ -420,6 +401,25 @@ namespace InfinityFit.Migrations
 
                     b.HasOne("InfinityFit.Models.User", "User")
                         .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InfinityFit.Models.Like", b =>
+                {
+                    b.HasOne("InfinityFit.Models.Post", "Post")
+                        .WithMany("Likes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InfinityFit.Models.User", "User")
+                        .WithMany("Likes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -517,16 +517,16 @@ namespace InfinityFit.Migrations
 
             modelBuilder.Entity("InfinityFit.Models.Post", b =>
                 {
-                    b.Navigation("Apreciations");
-
                     b.Navigation("Comments");
+
+                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("InfinityFit.Models.User", b =>
                 {
-                    b.Navigation("Apreciations");
-
                     b.Navigation("Comments");
+
+                    b.Navigation("Likes");
 
                     b.Navigation("Posts");
 

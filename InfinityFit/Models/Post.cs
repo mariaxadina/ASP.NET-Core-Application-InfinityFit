@@ -16,7 +16,7 @@ namespace InfinityFit.Models
         public string? Description { get; set; }
 
         [Required]
-        public required string Imagepath { get; set; }
+        public required string ImagePath { get; set; }
 
         public DateTime DatePosted { get; set; } = DateTime.UtcNow;
 
@@ -26,6 +26,6 @@ namespace InfinityFit.Models
         public double Longitude { get; set; }
 
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-        public ICollection<Appreciation> Apreciations { get; set; } = new List<Appreciation>();
+        public ICollection<Like> Likes { get; set; } = new List<Like>();
     }
 }

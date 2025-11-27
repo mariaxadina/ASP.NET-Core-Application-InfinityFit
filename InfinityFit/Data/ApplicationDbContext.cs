@@ -16,7 +16,7 @@ namespace InfinityFit.Data
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Appreciation> Apreciations { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -24,9 +24,9 @@ namespace InfinityFit.Data
             base.OnModelCreating(builder);
 
             // Appreciation → Post
-            builder.Entity<Appreciation>()
+            builder.Entity<Like>()
                 .HasOne(a => a.Post)
-                .WithMany(p => p.Apreciations)
+                .WithMany(p => p.Likes)
                 .HasForeignKey(a => a.PostId)
                 .OnDelete(DeleteBehavior.Restrict);
 

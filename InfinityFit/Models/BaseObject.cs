@@ -8,6 +8,6 @@ namespace InfinityFit.Models
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime DateOfCreation { get; set; } = DateTime.Now;
     }
 }
