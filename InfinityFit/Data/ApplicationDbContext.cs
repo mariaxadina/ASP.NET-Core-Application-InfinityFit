@@ -1,14 +1,48 @@
-﻿//using InfinityFit.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using InfinityFit.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace InfinityFit.Data;
-
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+namespace InfinityFit.Data
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Badge> Badges { get; set; }
+        public DbSet<UserBadge> UserBadges { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Appreciation → Post
+            builder.Entity<Like>()
+                .HasOne(a => a.Post)
+                .WithMany(p => p.Likes)
+                .HasForeignKey(a => a.PostId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Comment → Post
+            builder.Entity<Comment>()
+                .HasOne(c => c.Post)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.PostId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // UserBadge → Badge
+            builder.Entity<UserBadge>()
+                .HasOne(ub => ub.Badge)
+                .WithMany(b => b.UserBadges)
+                .HasForeignKey(ub => ub.BadgeId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

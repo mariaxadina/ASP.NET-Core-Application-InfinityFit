@@ -1,0 +1,24 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# Nuget
+*.nupkg
+*.props
+*.targets
+project.lock.json
+project.assets.json
+
+# ASP.NET configs
+appsettings.Development.json
+appsettings.Local.json
+
+# VSCode
+.vscode/
+
+# Rider
+.idea/
