@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using InfinityFit.Data;
-
+using InfinityFit.Models;
 
 public class Program
 {
@@ -15,7 +15,7 @@ public class Program
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -53,7 +53,7 @@ public class Program
             try
             {
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var userManager = services.GetRequiredService<UserManager<User>>();
 
                 string[] roles = { "Administrator", "User" };
 
@@ -71,7 +71,7 @@ public class Program
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
                 if (adminUser == null)
                 {
-                    var newAdmin = new IdentityUser
+                    var newAdmin = new User
                     {
                         UserName = adminEmail,
                         Email = adminEmail,

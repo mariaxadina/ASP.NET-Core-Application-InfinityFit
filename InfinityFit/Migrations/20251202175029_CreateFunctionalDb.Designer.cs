@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfinityFit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251127122039_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251202175029_CreateFunctionalDb")]
+    partial class CreateFunctionalDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,7 +164,7 @@ namespace InfinityFit.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("DailyDistanceGoal")
+                    b.Property<float?>("Daily_Distance_Goal")
                         .HasColumnType("real");
 
                     b.Property<string>("Email")
@@ -174,7 +174,7 @@ namespace InfinityFit.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Level")
+                    b.Property<int?>("Level")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -203,7 +203,7 @@ namespace InfinityFit.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalPoints")
+                    b.Property<int?>("TotalPoints")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InfinityFit.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CreateFunctionalDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,9 +30,9 @@ namespace InfinityFit.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    TotalPoints = table.Column<int>(type: "int", nullable: false),
-                    DailyDistanceGoal = table.Column<float>(type: "real", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: true),
+                    TotalPoints = table.Column<int>(type: "int", nullable: true),
+                    Daily_Distance_Goal = table.Column<float>(type: "real", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

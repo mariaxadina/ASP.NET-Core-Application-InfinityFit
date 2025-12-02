@@ -5,9 +5,9 @@ namespace InfinityFit.Models
 {
     public class User : IdentityUser
     {
-        public int Level { get; set; } = 1;
-        public int TotalPoints { get; set; }
-        public float DailyDistanceGoal { get; set; }
+        public int? Level { get; set; } = 1;
+        public int? TotalPoints { get; set; }
+        public float? Daily_Distance_Goal { get; set; }
 
         public ICollection<Post> Posts { get; set; } = new List<Post>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
