@@ -1,19 +1,18 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace InfinityFit.Pages;
+using InfinityFit.Models;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly UserManager<User> _userManager;
+    public List<User> Users { get; set; } = new();
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(UserManager<User> userManager)
     {
-        _logger = logger;
+        _userManager = userManager;
     }
-
     public void OnGet()
     {
-
+        Users = _userManager.Users.ToList();
     }
 }
