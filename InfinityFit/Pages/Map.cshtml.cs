@@ -2,7 +2,10 @@ using InfinityFit.Data;
 using InfinityFit.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Microsoft.DotNet.MSIdentity.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace InfinityFit.Pages.Map
 {
@@ -10,9 +13,13 @@ namespace InfinityFit.Pages.Map
     {
         private readonly ApplicationDbContext _context;
 
-        public MapModel(ApplicationDbContext context)
+        private readonly  IConfiguration _config ; 
+
+        public MapModel(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
+            _config =  config;
+
         }
 
         public List<Post> NearbyPhotos { get; set; } = new List<Post>();
@@ -31,8 +38,27 @@ namespace InfinityFit.Pages.Map
                         Math.Abs(p.Longitude - lon.Value) <= lonRange)
                     .ToListAsync();
             }
-
             return Page();
+     
         }
+
+
+        public async Task<JsonResult> OnGetNearbyPlacesAsync(double lat, double lon)
+        {
+            var dist = 1000; //1km
+            var apiKey = _config["GeoapifyApiKey"];
+            var url = $"https://api.geoapify.com/v2/places?categories=tourism.sights&filter=circle:{lon},{lat},{dist}&apiKey={apiKey}";
+
+
+            using var client = new HttpClient();
+            var result = await client.GetFromJsonAsync<object>(url);
+            return new JsonResult(result);
+        }
+
+
+        
     }
+   
+
+
 }

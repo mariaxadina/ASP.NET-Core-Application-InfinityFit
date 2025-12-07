@@ -29,16 +29,54 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        var map = L.map('map').setView([45.9432, 24.9668], 6); // România default
+    var map = L.map('map').setView([45.9432, 24.9668], 6); // România default
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-        map.on('click', function (e) {
-            const lat = e.latlng.lat;
-            const lon = e.latlng.lng;
-            window.location.href = `?lat=${lat}&lon=${lon}`;
+    map.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+        window.location.href = `?lat=${lat}&lon=${lon}`;
+    });
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            map.setView([userLat, userLon], 15);
+            L.marker([userLat, userLon]).addTo(map).bindPopup("You are here").openPopup();
+
+            // Wrap async code inside an IIFE
+            (async function() {
+                try {
+                    const response = await fetch(`/Map?handler=NearbyPlaces&lat=${userLat}&lon=${userLon}`);
+                    const data = await response.json();
+
+                    data.features.forEach(location => {
+                        const coords = location.geometry.coordinates; // [lon, lat]
+                        const name = location.properties.name;
+                        const address = location.properties.formatted;
+
+                        L.marker([coords[1], coords[0]])
+                            .addTo(map)
+                            .bindPopup(`<strong>${name}</strong><br>${address}`);
+                    });
+
+                } catch (err) {
+                    console.error("Error fetching nearby places:", err);
+                }
+            })();
+
+        }, function (error) {
+            console.warn("Geolocation error: ", error.message);
         });
-    </script>
+    } else {
+        console.warn("Geolocation is not supported by this browser.");
+    }
+</script>
+
 }
