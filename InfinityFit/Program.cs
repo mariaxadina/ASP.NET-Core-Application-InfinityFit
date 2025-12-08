@@ -19,6 +19,7 @@ public class Program
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
+        builder.Services.AddHttpClient();
         builder.Services.AddRazorPages();
 
         var app = builder.Build();

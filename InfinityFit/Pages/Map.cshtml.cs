@@ -12,13 +12,14 @@ namespace InfinityFit.Pages.Map
     public class MapModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-
+        private readonly IHttpClientFactory _http;
         private readonly  IConfiguration _config ; 
 
-        public MapModel(ApplicationDbContext context, IConfiguration config)
+        public MapModel(ApplicationDbContext context, IConfiguration config, IHttpClientFactory http)
         {
             _context = context;
             _config =  config;
+            _http = http;
 
         }
 
@@ -28,7 +29,7 @@ namespace InfinityFit.Pages.Map
         {
             if (lat.HasValue && lon.HasValue)
             {
-                const double maxDistanceKm = 1000; // Ajustează după nevoie
+                const double maxDistanceKm = 1000;//1km
                 double latRange = maxDistanceKm / 111.0;
                 double lonRange = maxDistanceKm / (111.0 * Math.Cos(lat.Value * Math.PI / 180.0));
 
@@ -41,16 +42,15 @@ namespace InfinityFit.Pages.Map
             return Page();
      
         }
-
-
         public async Task<JsonResult> OnGetNearbyPlacesAsync(double lat, double lon)
         {
             var dist = 1000; //1km
-            var apiKey = _config["GeoapifyApiKey"];
+            var apiKey = _config["Geoapify:ApiKey"];
+
             var url = $"https://api.geoapify.com/v2/places?categories=tourism.sights&filter=circle:{lon},{lat},{dist}&apiKey={apiKey}";
 
 
-            using var client = new HttpClient();
+            using var client = _http.CreateClient();
             var result = await client.GetFromJsonAsync<object>(url);
             return new JsonResult(result);
         }
