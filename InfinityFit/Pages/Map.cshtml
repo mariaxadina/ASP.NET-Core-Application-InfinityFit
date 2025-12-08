@@ -1,4 +1,29 @@
 ﻿@page
 @model InfinityFit.Pages.MapModel
 @{
+    ViewData["Title"] = "Map Search";
+}
+
+<h2>Search Places by Map</h2>
+
+<div id="map" style="height: 500px;"></div>
+<h2>Results</h2>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([45.9432, 24.9668], 6); // Default Romania
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        map.on('click', function (e) {
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
+            window.location.href = `?lat=${lat}&lon=${lon}`;
+        });
+    </script>
 }
