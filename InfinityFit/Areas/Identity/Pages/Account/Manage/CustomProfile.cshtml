@@ -23,35 +23,61 @@
     <button type="submit" class="btn btn-primary">Update Distance Goal</button>
 </form>
 
-<button type="button" id="getLocationBtn"
-        style="
-            background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff8f70);
-            border: none;
-            padding: 12px 22px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 99, 132, 0.4);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        "
-        onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 6px 16px rgba(255, 99, 132, 0.6)'"
-        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(255, 99, 132, 0.4)'">
-    📍 Get Location of the Day
-</button>
+<hr />
 
-<!-- Hidden inputs to store the coordinates -->
-<input type="hidden" id="Latitude" name="Latitude" />
-<input type="hidden" id="Longitude" name="Longitude" />
+<form method="post" asp-page-handler="GetLocation" id="locationForm">
+    <input type="hidden" id="Latitude" name="Latitude" />
+    <input type="hidden" id="Longitude" name="Longitude" />
 
+    <button type="button" id="getLocationBtn"
+            style="
+                background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff8f70);
+                border: none;
+                padding: 12px 22px;
+                font-size: 18px;
+                font-weight: bold;
+                color: white;
+                border-radius: 12px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(255, 99, 132, 0.4);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            "
+            onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 6px 16px rgba(255, 99, 132, 0.6)'"
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(255, 99, 132, 0.4)'">
+        📍 Get Location of the Day
+    </button>
+</form>
 
+<p style="margin-top:20px;">
+    <strong style="color: lightpink;">Your location of the day is:</strong>
+    <span style="color: green; font-weight: bold;">@Model.LocationOfTheDay</span>
+</p>
+@if (Model.TouristAddress != null)
+{
+    <p>
+        <strong style="color:purple;">Address:</strong>
+        <span style="color:black; font-weight:bold;">
+            @Model.TouristAddress
+        </span>
+    </p>
+}
+@if (Model.TouristLatitude != null && Model.TouristLongitude != null)
+{
+    <div id="map" style="height: 400px; margin-top: 20px; border-radius:10px;"></div>
+}
+
+<hr />
 
 <p><strong style="color:blue;">Badges:</strong></p>
+<hr />
 
 
 @section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     <partial name="_ValidationScriptsPartial" />
+
     <script>
         document.getElementById("getLocationBtn").addEventListener("click", function () {
             if (!navigator.geolocation) {
@@ -59,20 +85,37 @@
                 return;
             }
 
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    let lat = position.coords.latitude;
-                    let lon = position.coords.longitude;
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.getElementById("Latitude").value = position.coords.latitude;
+                document.getElementById("Longitude").value = position.coords.longitude;
 
-                    document.getElementById("Latitude").value = lat;
-                    document.getElementById("Longitude").value = lon;
+                document.getElementById("locationForm").submit();
 
-                    alert("Location captured!\nLatitude: " + lat + "\nLongitude: " + lon);
-                },
-                function () {
-                    alert("Unable to retrieve your location.");
-                }
-            );
+            }, function () {
+                alert("Unable to retrieve your location.");
+            });
         });
+            @if (Model.TouristLatitude != null && Model.TouristLongitude != null)
+        {
+                <text>
+                    const lat = @Model.TouristLatitude;
+                    const lon = @Model.TouristLongitude;
+
+                    document.addEventListener("DOMContentLoaded", function () {
+                        // Inițializează harta
+                        var map = L.map('map').setView([lat, lon], 15);
+
+                        // Adaugă OpenStreetMap tiles
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19
+                        }).addTo(map);
+
+                        // Marker la locația primită
+                        L.marker([lat, lon]).addTo(map)
+                            .bindPopup("@Model.LocationOfTheDay")
+                            .openPopup();
+                    });
+                </text>
+        }
     </script>
 }
