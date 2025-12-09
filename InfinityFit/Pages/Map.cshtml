@@ -1,29 +1,97 @@
 ﻿@page
-@model InfinityFit.Pages.MapModel
+@model InfinityFit.Pages.Map.MapModel
 @{
     ViewData["Title"] = "Map Search";
 }
-
-<h2>Search Places by Map</h2>
+<h2>Search Photos by Map</h2>
 
 <div id="map" style="height: 500px;"></div>
+
 <h2>Results</h2>
+<div id="photo-results" class="photo-grid" style="margin-top: 30px;">
+    @if (Model.NearbyPhotos.Any())
+    {
+        foreach (var photo in Model.NearbyPhotos)
+        {
+            <a asp-page="/Photos/PhotoDetails" asp-route-id="@photo.Id">
+                <img src="@photo.ImagePath" alt="@photo.Title" class="grid-img" style="width: 200px; height: 270px;" />
+            </a>
+        }
+    }
+    else if (Request.Query.ContainsKey("lat"))
+    {
+        <p><strong>No photos found near this location.</strong></p>
+    }
+</div>
 
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        var map = L.map('map').setView([45.9432, 24.9668], 6); // Default Romania
+    var map = L.map('map').setView([45.9432, 24.9668], 6); // România default
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
 
-        map.on('click', function (e) {
-            const lat = e.latlng.lat;
-            const lon = e.latlng.lng;
-            window.location.href = `?lat=${lat}&lon=${lon}`;
+    const Costum_Icon = L.icon ({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    map.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+        window.location.href = `?lat=${lat}&lon=${lon}`;
+    });
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            map.setView([userLat, userLon], 15);
+            L.marker([userLat, userLon]).addTo(map).bindPopup("You are here").openPopup();
+
+            (async function() {
+                try {
+                    const response = await fetch(`/Map?handler=NearbyPlaces&lat=${userLat}&lon=${userLon}`);
+                    const data = await response.json();
+
+                    if (!data.features) {
+                        console.log("Eroare call api");
+                        return;
+                    }
+
+                    data.features.forEach(location => {
+                        const coords = location.geometry.coordinates; // [lon, lat]
+                        const name = location.properties.name || "Loc misterios";
+                        const address = location.properties.formatted;
+
+                        L.marker([coords[1], coords[0]], {icon:Costum_Icon})
+                            .addTo(map)
+                            .bindPopup(`<strong>${name}</strong><br>${address}`);
+                    });
+
+                } catch (err) {
+                    console.error("Error fetching nearby places:", err);
+                }
+            })();
+
+        }, function (error) {
+            console.warn("Geolocation error: ", error.message);
         });
-    </script>
+    } else {
+        console.warn("Geolocation is not supported by this browser.");
+    }
+</script>
+
 }

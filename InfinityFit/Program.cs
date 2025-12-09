@@ -21,6 +21,8 @@ public class Program
         builder.Services.Configure<InfinityFit.Options.Geoapify>(
             builder.Configuration.GetSection("Geoapify")
         );
+
+        builder.Services.AddHttpClient();
         builder.Services.AddRazorPages();
         builder.Services.AddHttpClient();
         var app = builder.Build();
