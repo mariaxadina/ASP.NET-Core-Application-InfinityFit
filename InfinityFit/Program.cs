@@ -18,7 +18,9 @@ public class Program
         builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
-
+        builder.Services.Configure<InfinityFit.Options.Geoapify>(
+            builder.Configuration.GetSection("Geoapify")
+        );
         builder.Services.AddRazorPages();
         builder.Services.AddHttpClient();
         var app = builder.Build();
