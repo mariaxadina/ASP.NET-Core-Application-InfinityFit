@@ -26,15 +26,8 @@
         <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label>Latitude</label>
-        <input asp-for="Input.Latitude" class="form-control" id="latInput" readonly />
-    </div>
-
-    <div class="mb-3">
-        <label>Longitude</label>
-        <input asp-for="Input.Longitude" class="form-control" id="lonInput" readonly />
-    </div>
+    <input asp-for="Input.Latitude" type="hidden" id="latInput" />
+    <input asp-for="Input.Longitude" type="hidden" id="lonInput" />
 
     <button type="submit" class="btn btn-primary">Create Post</button>
 </form>
