@@ -1,8 +1,11 @@
+using InfinityFit.Data;
 using InfinityFit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -14,11 +17,21 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly IHttpClientFactory _http;
         private readonly string _geoapifyKey;
-        public CustomProfileModel(UserManager<User> userManager, IHttpClientFactory http, IOptions<InfinityFit.Options.Geoapify> geoapifyOptions)
+
+
+        private readonly ApplicationDbContext _db;
+
+
+        public CustomProfileModel(UserManager<User> userManager, IHttpClientFactory http, IOptions<InfinityFit.Options.Geoapify> geoapifyOptions, ApplicationDbContext db)
         {
             _userManager = userManager;
             _http = http;
             _geoapifyKey = geoapifyOptions.Value.ApiKey;
+
+
+            _db = db;
+
+
         }
 
         // The currently logged-in user
@@ -42,6 +55,13 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         public string? TouristAddress { get; set; }
         public double? TouristLatitude { get; set; }
         public double? TouristLongitude { get; set; }
+
+
+
+        public IList<UserBadge> UserBadges { get; set; } = new List<UserBadge>();
+
+
+
         public async Task OnGetAsync()
         {
             CurrentUser = await _userManager.GetUserAsync(User);
@@ -52,7 +72,17 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
                 TotalPoints = CurrentUser.TotalPoints;
                 Level = CurrentUser.Level;
             }
+
+
+
+            var userId = CurrentUser.Id;
+
+            UserBadges = await _db.UserBadges
+                .Where(ub => ub.UserId == userId)
+                .Include(ub => ub.Badge)
+                .ToListAsync();
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -67,6 +97,13 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound("User not found");
             }
+
+            var userId = CurrentUser.Id;
+
+            UserBadges = await _db.UserBadges
+                .Where(ub => ub.UserId == userId)
+                .Include(ub => ub.Badge)
+                .ToListAsync();
 
             // Update the daily distance goal
             CurrentUser.Daily_Distance_Goal = DailyDistanceGoal;
@@ -102,6 +139,14 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         {
             CurrentUser = await _userManager.GetUserAsync(User);
             if (CurrentUser == null) return NotFound("User not found");
+
+            var userId = CurrentUser.Id;
+
+            UserBadges = await _db.UserBadges
+                .Where(ub => ub.UserId == userId)
+                .Include(ub => ub.Badge)
+                .ToListAsync();
+
 
             float distanceGoal = CurrentUser.Daily_Distance_Goal ?? 0;
 
@@ -163,7 +208,6 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
                 TouristLongitude = null;
             }
 
-            // Reîncarc? valorile userului pentru UI
             DailyDistanceGoal = CurrentUser.Daily_Distance_Goal;
             TotalPoints = CurrentUser.TotalPoints;
             Level = CurrentUser.Level;

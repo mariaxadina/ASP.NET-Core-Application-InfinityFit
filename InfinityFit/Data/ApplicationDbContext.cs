@@ -43,6 +43,38 @@ namespace InfinityFit.Data
                 .WithMany(b => b.UserBadges)
                 .HasForeignKey(ub => ub.BadgeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Badge>().HasData(
+                new Badge
+                {
+                    Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                    Name = "Welcome",
+                    Description = "Ți-ai creat contul", // badge pentru toți userii
+                    Icon = "/images/1.png"
+                },
+                new Badge
+                {
+                    Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                    Name = "First Post",
+                    Description = "Ai făcut prima ta postare",
+                    Icon = "/images/2.png" // dacă vrei emoji
+                },
+                new Badge
+                {
+                    Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    Name = "Traveler",
+                    Description = "Ai făcut 5 postări",
+                    Icon = "/images/3.png"
+                },
+                new Badge
+                {
+                    Id = Guid.Parse("44444444-4444-4444-4444-444444444444"),
+                    Name = "Explorer",
+                    Description = "Ai făcut 20 de postări",
+                    Icon = "/images/4.png"
+                }
+            );
+
         }
     }
 }

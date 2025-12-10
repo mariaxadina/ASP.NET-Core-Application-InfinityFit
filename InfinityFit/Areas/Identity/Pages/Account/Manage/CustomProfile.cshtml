@@ -68,7 +68,62 @@
 
 <hr />
 
+<style>
+    .badge-grid {
+        display: flex; /* așază badge-urile pe orizontală */
+        flex-wrap: wrap; /* permite trecerea pe rândul următor dacă e prea înghesuit */
+        gap: 20px; /* spațiu între badge-uri */
+        justify-content: center; /* centrează toate badge-urile pe rând */
+        margin-top: 20px;
+    }
+
+    .badge-card {
+        display: flex;
+        flex-direction: column; /* imagine + text unul sub altul */
+        align-items: center; /* centrează conținutul */
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        width: 150px; /* poți ajusta dimensiunea */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: center; /* centrează textul */
+        background-color: #f9f9f9;
+        transition: transform 0.2s;
+    }
+
+        .badge-card:hover {
+            transform: scale(1.05); /* efect mic la hover */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .badge-card img {
+            width: 80px; /* dimensiunea imaginii */
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+</style>
+
 <p><strong style="color:blue;">Badges:</strong></p>
+
+@if (Model.UserBadges.Count == 0)
+{
+    <p>No badges yet.</p>
+}
+else
+{
+    <div class="badge-grid">
+        @foreach (var ub in Model.UserBadges)
+        {
+            <div class="badge-card">
+                <img src="@ub.Badge.Icon" alt="@ub.Badge.Name" />
+                <h4>@ub.Badge.Name</h4>
+                <p>@ub.Badge.Description</p>
+                <small>Awarded: @ub.DateAwarded.ToShortDateString()</small>
+            </div>
+        }
+    </div>
+}
 <hr />
 
 
