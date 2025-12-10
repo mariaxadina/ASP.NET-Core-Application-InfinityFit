@@ -8,8 +8,8 @@ namespace InfinityFit.Models
         public required string UserId { get; set; }  // FK → User
         public required Guid BadgeId { get; set; }   // FK → Badge
 
-        public required User User { get; set; }
-        public required Badge Badge { get; set; }
+        public User? User { get; set; }
+        public Badge? Badge { get; set; }
 
         public DateTime DateAwarded { get; set; } = DateTime.UtcNow;
     }

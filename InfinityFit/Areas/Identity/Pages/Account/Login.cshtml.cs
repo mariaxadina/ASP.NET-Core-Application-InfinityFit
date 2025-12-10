@@ -15,13 +15,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using InfinityFit.Models;
+using InfinityFit.Services;
 namespace InfinityFit.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<User> _userManager;
 
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, UserManager<User> userManager)
+        {
+            _signInManager = signInManager;
+            _logger = logger;
+            _userManager = userManager;
         private readonly UserManager<User> _user;
 
         [TempData]
@@ -124,6 +131,11 @@ namespace InfinityFit.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 // 1. Find the User using the injected UserManager (_user) and the Email input.
                 // This is necessary because Input.Email is now different from the DB's UserName field.
                 var user = await _user.FindByEmailAsync(Input.Email);

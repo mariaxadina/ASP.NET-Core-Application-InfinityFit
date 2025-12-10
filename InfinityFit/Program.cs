@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using InfinityFit.Data;
 using InfinityFit.Models;
+using InfinityFit.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 public class Program
 {
@@ -24,6 +25,10 @@ public class Program
         builder.Services.AddHttpClient();
         builder.Services.AddRazorPages();
         builder.Services.AddHttpClient();
+
+        builder.Services.AddScoped<BadgeService>();
+
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -56,6 +61,7 @@ public class Program
         using (var scope = app.Services.CreateScope())
         {
             var services = scope.ServiceProvider;
+
 
             try
             {

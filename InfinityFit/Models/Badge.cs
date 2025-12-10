@@ -12,6 +12,7 @@ namespace InfinityFit.Models
         [StringLength(500)]
         public string? Description { get; set; }
 
+        public string Icon { get; set; }
         public ICollection<UserBadge> UserBadges { get; set; } = new List<UserBadge>();
     }
 }
