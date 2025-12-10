@@ -22,6 +22,9 @@ namespace InfinityFit.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
+        [TempData]
+        public string Authorization_Message{get;set;}
+
         public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
@@ -86,6 +89,15 @@ namespace InfinityFit.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+
+            ReturnUrl = returnUrl;
+
+            if(!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("/Posts/Create"))
+            {
+                Authorization_Message = "Pentru a crea o postare este nevoie sa te autentifici!";
+            }
+
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
