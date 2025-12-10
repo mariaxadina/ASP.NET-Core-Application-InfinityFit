@@ -15,24 +15,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using InfinityFit.Models;
-using InfinityFit.Services;
 namespace InfinityFit.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly UserManager<User> _userManager;
-
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, UserManager<User> userManager)
-        {
-            _signInManager = signInManager;
-            _logger = logger;
-            _userManager = userManager;
         private readonly UserManager<User> _user;
 
         [TempData]
-        public string Authorization_Message{get;set;}
+        public string Authorization_Message { get; set; }
 
         public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, UserManager<User> user)
         {
@@ -102,7 +94,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
 
-            if(!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("/Posts/Create"))
+            if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("/Posts/Create"))
             {
                 Authorization_Message = "Pentru a crea o postare este nevoie sa te autentifici!";
             }
@@ -131,35 +123,19 @@ namespace InfinityFit.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                // 1. Find the User using the injected UserManager (_user) and the Email input.
-                // This is necessary because Input.Email is now different from the DB's UserName field.
                 var user = await _user.FindByEmailAsync(Input.Email);
 
-                if (user == null)
-                {
-                    // If user is not found by Email, treat it as an invalid attempt.
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
-
-                // 2. Check the password against the found User object using CheckPasswordSignInAsync.
-                // This method checks the password hash without performing the initial user lookup.
-                var result = await _signInManager.CheckPasswordSignInAsync(user, Input.Password, lockoutOnFailure: false);
-
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    // 3. Manually sign the user in and set the cookie (required after CheckPasswordSignInAsync).
-                    await _signInManager.SignInAsync(user, Input.RememberMe);
-                    
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                
+
+
+
                 // --- Existing Error Handling Logic ---
 
                 if (result.RequiresTwoFactor)
@@ -171,9 +147,8 @@ namespace InfinityFit.Areas.Identity.Pages.Account
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
-                else 
+                else
                 {
-                    // This now handles the failed password check or other failures like not allowed to sign in.
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
@@ -182,7 +157,5 @@ namespace InfinityFit.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-        
     }
 }
