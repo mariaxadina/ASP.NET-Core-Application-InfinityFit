@@ -7,7 +7,6 @@ namespace InfinityFit.Models
     public class Post : BaseObject
     {
         public required string UserId { get; set; }   // FK → User
-        public required Guid LocationId { get; set; } // FK → Location
 
         [StringLength(200)]
         public string? Title { get; set; }

@@ -1,19 +1,53 @@
 @page
-@model InfinityFit.Pages.Posts.CreateModel 
+@model InfinityFit.Pages.Posts.CreateModel
 @{
-    ViewData["Title"] = "Crează O Nouă Postare";
+    ViewData["Title"] = "Create Post";
 }
 
-<h1 class="display-5 mt-4">➕ Crează Postare Nouă</h1>
+<h1>Create a New Post</h1>
 
-<hr />
+<form method="post" enctype="multipart/form-data">
 
-<div class="row">
-    <div class="col-md-8">
-        
+    <div class="mb-3">
+        <label asp-for="Input.Title" class="form-label"></label>
+        <input asp-for="Input.Title" class="form-control" />
+        <span asp-validation-for="Input.Title" class="text-danger"></span>
     </div>
-</div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Description" class="form-label"></label>
+        <textarea asp-for="Input.Description" class="form-control"></textarea>
+        <span asp-validation-for="Input.Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.ImageFile" class="form-label">Upload Image</label>
+        <input asp-for="Input.ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Latitude</label>
+        <input asp-for="Input.Latitude" class="form-control" id="latInput" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label>Longitude</label>
+        <input asp-for="Input.Longitude" class="form-control" id="lonInput" readonly />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Post</button>
+</form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                document.getElementById("latInput").value = pos.coords.latitude;
+                document.getElementById("lonInput").value = pos.coords.longitude;
+            });
+        }
+    </script>
 }
