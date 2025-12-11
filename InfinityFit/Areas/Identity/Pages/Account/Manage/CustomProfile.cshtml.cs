@@ -17,21 +17,14 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly IHttpClientFactory _http;
         private readonly string _geoapifyKey;
-
-
         private readonly ApplicationDbContext _db;
-
 
         public CustomProfileModel(UserManager<User> userManager, IHttpClientFactory http, IOptions<InfinityFit.Options.Geoapify> geoapifyOptions, ApplicationDbContext db)
         {
             _userManager = userManager;
             _http = http;
             _geoapifyKey = geoapifyOptions.Value.ApiKey;
-
-
             _db = db;
-
-
         }
 
         // The currently logged-in user
@@ -60,7 +53,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
 
         public IList<UserBadge> UserBadges { get; set; } = new List<UserBadge>();
 
-
+        public IList<Post> Posts { get; set; } = new List<Post>();
 
         public async Task OnGetAsync()
         {
@@ -80,6 +73,13 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             UserBadges = await _db.UserBadges
                 .Where(ub => ub.UserId == userId)
                 .Include(ub => ub.Badge)
+                .ToListAsync();
+
+            Posts = await _db.Posts
+                .Where(p => p.UserId == userId)
+                .Include(l => l.Likes)
+                .Include(c => c.Comments)
+                .OrderBy(d => d.DateOfCreation)
                 .ToListAsync();
         }
 
@@ -103,6 +103,13 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             UserBadges = await _db.UserBadges
                 .Where(ub => ub.UserId == userId)
                 .Include(ub => ub.Badge)
+                .ToListAsync();
+
+            Posts = await _db.Posts
+                .Where(p => p.UserId == userId)
+                .Include(l => l.Likes)
+                .Include(c => c.Comments)
+                .OrderBy(d => d.DateOfCreation)
                 .ToListAsync();
 
             // Update the daily distance goal
@@ -145,6 +152,13 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             UserBadges = await _db.UserBadges
                 .Where(ub => ub.UserId == userId)
                 .Include(ub => ub.Badge)
+                .ToListAsync();
+
+            Posts = await _db.Posts
+                .Where(p => p.UserId == userId)
+                .Include(l => l.Likes)
+                .Include(c => c.Comments)
+                .OrderBy(d => d.DateOfCreation)
                 .ToListAsync();
 
 
@@ -215,6 +229,27 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+
+
+        public async Task<IActionResult> OnPostDeletePostAsync(Guid postId)
+        {
+            var post = await _db.Posts
+                .Include(p => p.Comments)
+                .Include(p => p.Likes)
+                .FirstOrDefaultAsync(p => p.Id == postId);
+
+            if (post == null)
+                return NotFound();
+
+            _db.Comments.RemoveRange(post.Comments);
+            _db.Likes.RemoveRange(post.Likes);
+            _db.Posts.Remove(post);
+
+            await _db.SaveChangesAsync();
+
+            TempData["StatusMessage"] = "Post deleted successfully.";
+            return RedirectToPage();
+        }
 
     }
 }
