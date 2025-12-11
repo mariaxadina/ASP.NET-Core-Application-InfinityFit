@@ -1,12 +1,13 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 using InfinityFit.Data;
 using InfinityFit.Models;
+using InfinityFit.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace InfinityFit.Pages.Posts
 {
@@ -16,12 +17,14 @@ namespace InfinityFit.Pages.Posts
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _env;
+        private readonly BadgeService _badgeService;
 
-        public CreateModel(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment env)
+        public CreateModel(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment env, BadgeService badgeService)
         {
             _context = context;
             _userManager = userManager;
             _env = env;
+            _badgeService = badgeService;
         }
 
         [BindProperty]
@@ -60,7 +63,6 @@ namespace InfinityFit.Pages.Posts
             if (user == null)
                 return Unauthorized();
 
-    
             string uploadsFolder = Path.Combine(_env.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
@@ -87,6 +89,9 @@ namespace InfinityFit.Pages.Posts
 
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
+
+            var userId = user.Id;
+            await _badgeService.CheckPostingBadgesAsync(userId);
 
             return RedirectToPage("/Index");
         }
