@@ -14,17 +14,22 @@ namespace InfinityFit.Pages.Posts
     [Authorize] // doar utilizatorii logați pot crea postări
     public class CreateModel : PageModel
     {
+        private readonly SignInManager<User> _signInManager;
+        private const int POINTS_FOR_NEW_POST = 50;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _env;
         private readonly BadgeService _badgeService;
 
-        public CreateModel(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment env, BadgeService badgeService)
+        public CreateModel(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment env, BadgeService badgeService,
+                           SignInManager<User> signinmanager 
+                            )
         {
             _context = context;
             _userManager = userManager;
             _env = env;
             _badgeService = badgeService;
+            _signInManager = signinmanager;
         }
 
         [BindProperty]
@@ -69,11 +74,13 @@ namespace InfinityFit.Pages.Posts
 
             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(Input.ImageFile.FileName);
             string filePath = Path.Combine(uploadsFolder, fileName);
+            
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await Input.ImageFile.CopyToAsync(stream);
             }
+            
 
             var post = new Post
             {
@@ -87,11 +94,21 @@ namespace InfinityFit.Pages.Posts
                 DatePosted = DateTime.UtcNow
             };
 
-            _context.Posts.Add(post);
-            await _context.SaveChangesAsync();
+            
 
+            user.TotalPoints =(user.TotalPoints ?? 0) + POINTS_FOR_NEW_POST;
+            
             var userId = user.Id;
             await _badgeService.CheckPostingBadgesAsync(userId);
+
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
+            await _userManager.UpdateAsync(user);
+            await _signInManager.RefreshSignInAsync(user);
+
+         
+
+            
 
             return RedirectToPage("/Index");
         }

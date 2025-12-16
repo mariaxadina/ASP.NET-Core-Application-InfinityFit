@@ -11,7 +11,24 @@
     <div class="alert alert-success">@TempData["StatusMessage"]</div>
 }
 <p><strong style="color:blue;">Level:</strong> <span style="color:green;">@Model.CurrentUser.Level</span></p>
-<p><strong style="color:blue;">Points:</strong> <span style="color:orange;">@Model.CurrentUser.TotalPoints</span></p>
+
+@{
+    int userPoints = Model.CurrentUser.TotalPoints ?? 0;
+}
+@if (userPoints > 0)
+{
+    <p>
+        <strong style="color:blue;">Points:</strong> 
+        <span style="color:orange;">@userPoints</span>
+    </p>
+}
+else
+{
+    <p>
+        <strong style="color:blue;">Points:</strong> 
+        <span style="color:orange; font-weight:bold;">You have to create a post to earn points</span>
+    </p>
+}
 
 <form method="post" class="mt-3">
     <div class="mb-3">
