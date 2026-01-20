@@ -1,0 +1,47 @@
+﻿@model InfinityFit.Models.Post
+
+<div class="modal fade" id="commentsModal-@Model.Id" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Comments</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- Lista comentarii -->
+                <div class="mb-3" style="max-height:300px; overflow-y:auto;">
+                    @foreach (var comment in Model.Comments.OrderBy(c => c.Date))
+                    {
+                        <div class="mb-2">
+                            <strong>@comment.User.UserName</strong>
+                            <small class="text-muted">@comment.Date.ToLocalTime().ToString("HH:mm")</small>
+                            <div>@comment.Content</div>
+                        </div>
+                    }
+
+                </div>
+
+                <!-- Formular comentariu -->
+                <form method="post"
+                      asp-page="/Feed"
+                      asp-page-handler="Comment"
+                      asp-route-postId="@Model.Id">
+
+                    <textarea name="content"
+                              class="form-control mb-2"
+                              rows="2"
+                              placeholder="Write a comment..."
+                              required></textarea>
+
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        Post
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

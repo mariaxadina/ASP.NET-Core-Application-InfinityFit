@@ -12,5 +12,28 @@ else
     foreach (var post in Model.Posts)
     {
         <partial name="_PostCard" model="post" />
+    
     }
+}
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+    <div id="commentToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger text-white">
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["CommentError"]
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastEl = document.getElementById('commentToast');
+            if (toastEl && toastEl.querySelector('.toast-body').textContent.trim() !== '') {
+                var toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+                toast.show();
+            }
+        });
+    </script>
 }

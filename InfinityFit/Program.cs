@@ -25,6 +25,7 @@ public class Program
         builder.Services.AddHttpClient();
         builder.Services.AddRazorPages();
         builder.Services.AddHttpClient();
+        builder.Services.AddHttpClient<CommentModerationService>();
 
         builder.Services.AddScoped<BadgeService>();
 

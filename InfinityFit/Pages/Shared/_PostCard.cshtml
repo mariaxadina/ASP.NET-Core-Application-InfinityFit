@@ -24,10 +24,31 @@
 
         <div class="d-flex justify-content-between align-items-center">
             <small>
-                ❤️ @Model.Likes.Count |
-                💬 @Model.Comments.Count
-            </small>
+                <form method="post"
+                      asp-page="/Feed"
+                      asp-page-handler="Like"
+                      asp-route-postId="@Model.Id"
+                      class="d-inline">
 
+                    <button type="submit"
+                            class="btn btn-link p-0"
+                            title="Like">
+                        ❤️
+                    </button>
+
+                    @Model.Likes.Count
+                </form>
+
+                |
+                <button type="button"
+                        class="btn btn-link p-0"
+                        data-bs-toggle="modal"
+                        data-bs-target="#commentsModal-@Model.Id">
+                    💬 @Model.Comments.Count
+                </button>
+
+                <partial name="_CommentsModal" model="Model" />
+            </small>
         </div>
     </div>
 </div>
