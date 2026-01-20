@@ -1,4 +1,16 @@
 ﻿@page
 @model InfinityFit.Pages.FeedModel
-@{
+
+<h2 class="mb-4">Feed</h2>
+
+@if (!Model.Posts.Any())
+{
+    <p>Nu există postări.</p>
+}
+else
+{
+    foreach (var post in Model.Posts)
+    {
+        <partial name="_PostCard" model="post" />
+    }
 }

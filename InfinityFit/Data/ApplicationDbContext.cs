@@ -18,6 +18,7 @@ namespace InfinityFit.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
 
+    
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +37,10 @@ namespace InfinityFit.Data
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PostId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+             builder.Entity<Like>()
+                .HasIndex(l => new { l.UserId, l.PostId })
+                .IsUnique();
 
             // UserBadge → Badge
             builder.Entity<UserBadge>()
@@ -75,6 +80,7 @@ namespace InfinityFit.Data
                 }
             );
 
+           
         }
     }
 }
