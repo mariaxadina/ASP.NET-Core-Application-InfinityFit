@@ -1,10 +1,11 @@
 ﻿@page
 @model InfinityFit.Areas.Identity.Pages.Account.Manage.CustomProfileModel
-@{
-    ViewData["Title"] = "My Profile";
-}
 
-<h2>My Profile</h2>
+@{
+    ViewData["Title"] = Model.CurrentUser?.UserName ?? "My Profile";
+}
+<h2>@Model.CurrentUser?.UserName</h2>
+
 
 @if (TempData["StatusMessage"] != null)
 {

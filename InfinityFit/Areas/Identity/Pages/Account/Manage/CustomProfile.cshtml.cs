@@ -58,7 +58,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         public async Task OnGetAsync()
         {
             CurrentUser = await _userManager.GetUserAsync(User);
-
+            
             if (CurrentUser != null)
             {
                 DailyDistanceGoal = CurrentUser.Daily_Distance_Goal;
@@ -133,7 +133,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         }
         public static double GetDistanceKm(double lat1, double lon1, double lat2, double lon2)
         {
-            const double R = 6371; // raz? P?mânt în km
+            const double R = 6371; // raz? P?mï¿½nt ï¿½n km
             var dLat = (lat2 - lat1) * Math.PI / 180.0;
             var dLon = (lon2 - lon1) * Math.PI / 180.0;
             var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
@@ -173,7 +173,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             try
             {
                 var client = _http.CreateClient();
-                // Ob?ine pân? la 10 obiective în cerc cu raza mai mare pentru filtrare
+                // Ob?ine pï¿½n? la 10 obiective ï¿½n cerc cu raza mai mare pentru filtrare
                 string url = $"https://api.geoapify.com/v2/places?categories=tourism.sights&filter=circle:{Longitude},{Latitude},{distanceGoal * 2000}&limit=10&apiKey={_geoapifyKey}";
 
                 var response = await client.GetAsync(url);
@@ -200,7 +200,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
                         // Distan?a fa?? de user
                         double distKm = GetDistanceKm(Latitude.Value, Longitude.Value, locLat, locLon);
 
-                        // Verific?m dac? distan?a este aproximativ DailyDistanceGoal (±1 km)
+                        // Verific?m dac? distan?a este aproximativ DailyDistanceGoal (ï¿½1 km)
                         if (Math.Abs(distKm - distanceGoal) <= 1.0)
                         {
                             LocationOfTheDay = props.GetProperty("name").GetString() ?? "Unknown location";

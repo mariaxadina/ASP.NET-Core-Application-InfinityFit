@@ -1,0 +1,89 @@
+@page "{username}"
+@model InfinityFit.Pages.Profile.IndexModel
+
+<h2>@Model.ProfileUser.UserName</h2>
+
+<p>
+    <strong>Level:</strong> @Model.ProfileUser.Level
+</p>
+
+<hr />
+
+<h4>Badges</h4>
+
+@if (!Model.UserBadges.Any())
+{
+    <p>No badges yet.</p>
+}
+else
+{
+    <div class="badge-grid">
+        @foreach (var ub in Model.UserBadges)
+        {
+            <div class="badge-card">
+                <img src="@ub.Badge.Icon" alt="@ub.Badge.Name" />
+                <strong>@ub.Badge.Name</strong>
+            </div>
+        }
+    </div>
+}
+
+<hr />
+
+<h4>Posts</h4>
+
+@if (!Model.Posts.Any())
+{
+    <p>No posts yet.</p>
+}
+else
+{
+    <div class="profile-posts-grid">
+        @foreach (var post in Model.Posts)
+        {
+            <div class="profile-post-item">
+                <partial name="_PostCard" model="post" />
+            </div>
+        }
+    </div>
+}
+
+<style>
+    /* BADGES */
+    .badge-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 10px;
+    }
+
+    .badge-card {
+        width: 120px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        background: #f9f9f9;
+    }
+
+    .badge-card img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        margin-bottom: 5px;
+    }
+
+    /* POSTS GRID (PROFILE) */
+    .profile-posts-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .profile-post-item {
+        width: 100%;
+    }
+
+    /* RESPONSIVE */
+   

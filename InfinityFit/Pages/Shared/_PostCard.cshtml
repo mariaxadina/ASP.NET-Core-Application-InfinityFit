@@ -2,7 +2,14 @@
 
 <div class="card mb-3 shadow-sm mx-auto" style="max-width: 500px;">
     <div class="card-header py-2 d-flex justify-content-between align-items-center">
-        <a asp-page="/Account/Manage/CustomProfile"asp-route-userId="@Model.User.Id"class="small fw-bold text-decoration-none text-dark">@Model.User.UserName</a>
+        <a asp-page="/Profile/Index"
+        asp-route-username="@Model.User.UserName"
+        class="small fw-bold text-decoration-none">
+        @Model.User.UserName
+        </a>
+
+
+
         <small class="text-muted">
             @Model.DatePosted.ToLocalTime().ToString("dd MMM HH:mm")
         </small>
