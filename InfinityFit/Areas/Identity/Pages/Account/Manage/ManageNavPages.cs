@@ -59,6 +59,13 @@ namespace  InfinityFit.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        public static string Vouchers => "/Account/Vouchers"; // full path from the root of the area
+
+        public static string VouchersNavClass(ViewContext viewContext)
+        {
+            return PageNavClass(viewContext, Vouchers);
+        }
+
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
         /// <summary>
@@ -115,6 +122,7 @@ namespace  InfinityFit.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public static string CustomProfileNavClass(ViewContext viewContext) => PageNavClass(viewContext, "/Account/Manage/CustomProfile");
 
+        
         public static string PageNavClass(ViewContext viewContext, string page)
         {
             var activePage = viewContext.ViewData["ActivePage"] as string

@@ -4,28 +4,29 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>MERGE BO$$!.</p>
+<link rel="stylesheet" href="~/css/home.css" />
+
+
+<div class="hero">
+    <div class="hero-content">
+        <h1>Welcome to <span>InfinityFit</span></h1>
+        <p>Move. Explore. Achieve.</p>
+    </div>
 </div>
 
-
-<h2>Users</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Username</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
-            <tr>
-                <td>@user.Email</td>
-                <td>@user.UserName</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<section class="mission">
+    <h2>Our Mission</h2>
+    <p>
+        We promote tourism through movement and motivation.
+        Set your goal, start visiting landmarks today, and turn every step into progress.
+    </p>
+    <p>
+        We guide you to exciting locations, challenge you to exercise as you move,
+        and let you upload your achievements as photos.
+    </p>
+    <p>
+        Curious about your gains?
+        Collect badges, track your progress, and get rewarded with vouchers
+        as we promote your journey.
+    </p>
+</section>

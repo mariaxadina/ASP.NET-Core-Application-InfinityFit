@@ -1,0 +1,51 @@
+﻿@page
+@model InfinityFit.Areas.Identity.Pages.Account.VouchersModel
+@{
+    ViewData["Title"] = "Vouchers";
+}
+
+<link rel="stylesheet" href="~/css/Vouchers.css" />
+
+<div class="vouchers-page">
+    <div class="vouchers-hero">
+        <h1 class="dynamic-title">🎁 Welcome to your Vouchers!</h1>
+    </div>
+
+    <div class="vouchers-content">
+        <p>Track your progress, collect badges, and unlock rewards! 💪</p>
+
+        <div class="voucher-cards">
+            <div class="voucher-card">
+                <h3>10k Steps Badge</h3>
+                <p>Walk 10,000 steps in a day and earn this badge.</p>
+            </div>
+            <div class="voucher-card">
+                <h3>Landmark Explorer</h3>
+                <p>Visit 5 landmarks and unlock a 10% voucher for your next activity.</p>
+            </div>
+            <div class="voucher-card">
+                <h3>Fitness Star</h3>
+                <p>Complete 7 exercises this week and get a reward!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Dynamic typing effect for the title
+        const title = document.querySelector('.dynamic-title');
+        const text = "🎁 Welcome to your Vouchers!";
+        let index = 0;
+        title.textContent = '';
+
+        function typeTitle() {
+            if (index < text.length) {
+                title.textContent += text[index];
+                index++;
+                setTimeout(typeTitle, 100);
+            }
+        }
+        typeTitle();
+    </script>
+}
