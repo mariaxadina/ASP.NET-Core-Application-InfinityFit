@@ -1,31 +1,35 @@
 ﻿@page
 @model InfinityFit.Pages.FeedModel
 
-<h2 class="mb-4">Feed</h2>
+<link rel="stylesheet" href="~/css/Feed.css" />
+<div class="feed-page">
+    <h2 class="feed-title">Feed</h2>
 
-@if (!Model.Posts.Any())
-{
-    <p>Nu există postări.</p>
-}
-else
-{
-    foreach (var post in Model.Posts)
+    @if (!Model.Posts.Any())
     {
-        <partial name="_PostCard" model="post" />
-    
+        <p>Nu există postări.</p>
     }
-}
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
-    <div id="commentToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-danger text-white">
-            <strong class="me-auto">Error</strong>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
-        </div>
-        <div class="toast-body">
-            @TempData["CommentError"]
+    else
+    {
+        foreach (var post in Model.Posts)
+        {
+            <partial name="_PostCard" model="post" />
+        
+        }
+    }
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+        <div id="commentToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+           <div class="toast-body">
+                @TempData["CommentError"]
+            </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {

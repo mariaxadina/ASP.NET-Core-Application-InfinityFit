@@ -1,0 +1,90 @@
+﻿/* REMOVE DEFAULT SPACING */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* HERO SECTION */
+.hero {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    max-width: 650px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #333;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+    .hero h1 span {
+        color: #ff7a7a;
+    }
+
+.hero p {
+    font-size: 1.3rem;
+    color: #555;
+}
+
+/* MISSION SECTION */
+.mission {
+    background: #fff6f1;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+    .mission h2 {
+        font-size: 2.4rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .mission p {
+        max-width: 800px;
+        margin: 0 auto 1rem auto;
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.7;
+    }
+
+
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .mission h2 {
+        font-size: 2rem;
+    }
+}

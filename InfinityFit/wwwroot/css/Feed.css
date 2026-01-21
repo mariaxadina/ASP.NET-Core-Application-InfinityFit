@@ -1,0 +1,23 @@
+﻿body {
+}
+/* Page background */
+.feed-page {
+    background-color: #cce7ff; /* light blue */
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.feed-title {
+    font-family: 'Luckiest Guy', cursive; /* playful font, Google Fonts recommended */
+    font-size: 2.8rem;
+    color: #ff6f61; /* energetic coral color */
+    text-align: center;
+    text-shadow: 2px 2px #ffffff70, 0 0 10px #ff6f61; /* subtle glow/shadow */
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .feed-title {
+        font-size: 2.2rem;
+    }
+}

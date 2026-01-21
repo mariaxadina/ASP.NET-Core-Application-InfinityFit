@@ -1,6 +1,16 @@
 html {
   font-size: 14px;
 }
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
 
 @media (min-width: 768px) {
   html {
@@ -20,3 +30,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.custom-footer {
+    background-color: #0a3d62; /* dark blue */
+    color: white;
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+    .custom-footer a {
+        color: white;
+        text-decoration: underline;
+    }
+
+        .custom-footer a:hover {
+            color: #a5d6ff; /* light blue on hover */
+        }
