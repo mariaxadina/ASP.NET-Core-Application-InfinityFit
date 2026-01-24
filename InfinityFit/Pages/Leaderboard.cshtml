@@ -1,4 +1,38 @@
 ﻿@page
-@model InfinityFit.Pages.LeaderboardModel
-@{
-}
+@model LeaderboardModel
+
+<h2 class="mb-3">🏆 Leaderboard</h2>
+
+<form method="get" class="mb-4">
+    <select asp-for="Type" class="form-select w-auto" onchange="this.form.submit()">
+        <option value="Popularity">🔥 Popularitate</option>
+        <option value="Activity">⚡ Activitate</option>
+    </select>
+</form>
+
+<p class="text-muted">
+    Clasament bazat pe
+    @(Model.Type == LeaderboardType.Popularity
+        ? "engagement PRIMIT (like-uri + comentarii)"
+        : "engagement DAT (like-uri + comentarii)")
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Engagement</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Entries.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model.Entries[i].User.UserName</td>
+                <td>@Model.Entries[i].Engagement</td>
+            </tr>
+        }
+    </tbody>
+</table>

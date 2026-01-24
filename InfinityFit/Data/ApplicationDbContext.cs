@@ -17,7 +17,9 @@ namespace InfinityFit.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<LeaderboardEntry> LeaderboardEntries { get; set; }
 
+        
     
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -41,6 +43,13 @@ namespace InfinityFit.Data
              builder.Entity<Like>()
                 .HasIndex(l => new { l.UserId, l.PostId })
                 .IsUnique();
+
+            builder.Entity<LeaderboardEntry>()
+                 .HasOne(le => le.User)
+                 .WithMany()
+                 .HasForeignKey(le => le.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
 
             // UserBadge → Badge
             builder.Entity<UserBadge>()
