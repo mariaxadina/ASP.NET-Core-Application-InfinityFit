@@ -28,8 +28,8 @@ InfinityFit is a responsive photo-sharing platform built with ASP.NET Razor Page
     <img src="https://github.com/mariaxadina/ASP.NET-Core-Application-InfinityFit/blob/main/images/imagine2.png" width="70%" />
     <img src="https://github.com/mariaxadina/ASP.NET-Core-Application-InfinityFit/blob/main/images/imagine3.png" width="70%" />
 </p>
-## Technologies Used
 
+## Technologies Used
 
 ### ASP.NET Core Razor Pages
 InfinityFit is built using ASP.NET Core Razor Pages, a lightweight and page-focused web framework that simplifies building dynamic, data-driven websites. Razor Pages allows for clean separation of concerns by combining the HTML markup with server-side C# logic in .cshtml and .cshtml.cs files. This structure makes the application easier to manage and scale, especially for CRUD operations like adding photos, editing profiles, or moderating content. Razor Pages also integrates seamlessly with ASP.NET Core features like authentication, dependency injection, and model binding.
