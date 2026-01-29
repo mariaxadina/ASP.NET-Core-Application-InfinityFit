@@ -4,7 +4,7 @@
 InfinityFit is a responsive photo-sharing platform built with ASP.NET Razor Pages. We worked in an Agile Scrum team, collaborating closely to deliver features iteratively. InfinityFit is a gamified fitness and tourism app designed to make staying active fun and rewarding. Users can set personal goals, explore landmarks, and track their progress while exercising. The app incorporates gamification, rewarding users with badges, points, levels, and vouchers as they complete challenges, visit landmarks, and share their achievements, making fitness and exploration fun and engaging.
 
 <p align="center">
-    <img src="https://github.com/mariaxadina/ASP.NET-Core-Application-FlashMedia/blob/main/images/1.png" width="70%" />
+    <img src="https://github.com/mariaxadina/ASP.NET-Core-Application-InfinityFit/blob/main/images/imagine1.png" width="70%" />
 </p>
 
 ## Project Features
@@ -24,7 +24,10 @@ InfinityFit is a responsive photo-sharing platform built with ASP.NET Razor Page
 
 - Rewards System: Redeem earned badges and points for vouchers and perks.
 
-  
+  <p align="center">
+    <img src="https://github.com/mariaxadina/ASP.NET-Core-Application-InfinityFit/blob/main/images/imagine2.png" width="70%" />
+    <img src="https://github.com/mariaxadina/ASP.NET-Core-Application-InfinityFit/blob/main/images/imagine3.png" width="70%" />
+</p>
 ## Technologies Used
 
 
