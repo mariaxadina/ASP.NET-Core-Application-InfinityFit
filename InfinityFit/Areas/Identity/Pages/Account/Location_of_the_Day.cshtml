@@ -1,0 +1,67 @@
+﻿@page
+@model InfinityFit.Areas.Identity.Pages.Account.Location_of_the_DayModel
+
+<h2>Location of the Day</h2>
+
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-info">@TempData["StatusMessage"]</div>
+}
+
+<form method="post">
+    <label>Daily Distance Goal (km)</label>
+    <input asp-for="DailyDistanceGoal" class="form-control" type="number" step="0.1" />
+    <button type="submit" class="btn btn-primary mt-2">Save Goal</button>
+</form>
+
+<hr />
+
+<form method="post" asp-page-handler="GetLocation" id="locationForm">
+    <input type="hidden" id="Latitude" name="Latitude" />
+    <input type="hidden" id="Longitude" name="Longitude" />
+
+    <button type="button" id="getLocationBtn" class="btn btn-success">
+        📍 Get Location of the Day
+    </button>
+</form>
+
+@if (Model.TodayLocation != null)
+{
+    <p><strong>Location:</strong> @Model.TodayLocation.Name</p>
+    <p><strong>Address:</strong> @Model.TodayLocation.Address</p>
+
+    <div id="map" style="height:400px;width:100%;"></div>
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        document.getElementById("getLocationBtn").addEventListener("click", function () {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.getElementById("Latitude").value = position.coords.latitude;
+                document.getElementById("Longitude").value = position.coords.longitude;
+                document.getElementById("locationForm").submit();
+            });
+        });
+    </script>
+
+    @if (Model.TodayLocation != null)
+    {
+        <script>
+            var map = L.map('map').setView([@Model.TodayLocation.Latitude, @Model.TodayLocation.Longitude], 14);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(map);
+
+            L.marker([@Model.TodayLocation.Latitude, @Model.TodayLocation.Longitude])
+                .addTo(map)
+                .bindPopup("@Model.TodayLocation.Name")
+                .openPopup();
+
+            setTimeout(() => { map.invalidateSize(); }, 200);
+        </script>
+    }
+}

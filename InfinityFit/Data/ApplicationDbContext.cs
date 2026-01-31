@@ -19,8 +19,8 @@ namespace InfinityFit.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<LeaderboardEntry> LeaderboardEntries { get; set; }
 
-        
-    
+        public DbSet<DailyLocation> DailyLocations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

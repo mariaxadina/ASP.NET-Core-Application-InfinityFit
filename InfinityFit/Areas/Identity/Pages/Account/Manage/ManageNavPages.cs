@@ -66,6 +66,14 @@ namespace  InfinityFit.Areas.Identity.Pages.Account.Manage
             return PageNavClass(viewContext, Vouchers);
         }
 
+        public static string LocationOfTheDayPage => "/Account/Location_of_the_Day";
+
+        public static string LocationOfTheDayNavClass(ViewContext viewContext)
+        { 
+            return PageNavClass(viewContext, LocationOfTheDayPage);
+        }
+            
+
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
         /// <summary>
