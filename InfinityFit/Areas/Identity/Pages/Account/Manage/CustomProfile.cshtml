@@ -38,6 +38,100 @@ else
     </p>
 }
 
+<<<<<<< HEAD
+=======
+<a <a class="nav-link text-dark create-post" asp-page="/Posts/Create">➕ Create post</a>
+
+<form method="post" class="mt-3">
+    <div class="mb-3">
+        <label asp-for="DailyDistanceGoal" class="form-label">Daily Distance Goal (km)</label>
+        <input asp-for="DailyDistanceGoal" class="form-control" type="number" step="0.1" min="0" />
+        <span asp-validation-for="DailyDistanceGoal" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Distance Goal</button>
+</form>
+
+<hr />
+
+<form method="post" asp-page-handler="GetLocation" id="locationForm">
+    <input type="hidden" id="Latitude" name="Latitude" />
+    <input type="hidden" id="Longitude" name="Longitude" />
+
+    <button type="button" id="getLocationBtn"
+            style="
+                background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff8f70);
+                border: none;
+                padding: 12px 22px;
+                font-size: 18px;
+                font-weight: bold;
+                color: white;
+                border-radius: 12px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(255, 99, 132, 0.4);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            "
+            onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 6px 16px rgba(255, 99, 132, 0.6)'"
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(255, 99, 132, 0.4)'">
+        📍 Get Location of the Day
+    </button>
+</form>
+
+<p style="margin-top:20px;">
+    <strong style="color: lightpink;">Your location of the day is:</strong>
+    <span style="color: green; font-weight: bold;">@Model.LocationOfTheDay</span>
+</p>
+@if (Model.TouristAddress != null)
+{
+    <p>
+        <strong style="color:purple;">Address:</strong>
+        <span style="color:black; font-weight:bold;">
+            @Model.TouristAddress
+        </span>
+    </p>
+}
+@if (Model.TouristLatitude != null && Model.TouristLongitude != null)
+{
+    <div id="map" style="height: 400px; margin-top: 20px; border-radius:10px;"></div>
+}
+
+<hr />
+
+<style>
+    .badge-grid {
+        display: flex; /* așază badge-urile pe orizontală */
+        flex-wrap: wrap; /* permite trecerea pe rândul următor dacă e prea înghesuit */
+        gap: 20px; /* spațiu între badge-uri */
+        justify-content: center; /* centrează toate badge-urile pe rând */
+        margin-top: 20px;
+    }
+
+    .badge-card {
+        display: flex;
+        flex-direction: column; /* imagine + text unul sub altul */
+        align-items: center; /* centrează conținutul */
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        width: 150px; /* poți ajusta dimensiunea */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: center; /* centrează textul */
+        background-color: #f9f9f9;
+        transition: transform 0.2s;
+    }
+    .badge-card:hover {
+        transform: scale(1.05); /* efect mic la hover */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .badge-card img {
+        width: 120px; /* dimensiunea imaginii */
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 10px;
+        }
+</style>
+
+>>>>>>> main
 <p><strong style="color:blue;">Badges:</strong></p>
 
 
