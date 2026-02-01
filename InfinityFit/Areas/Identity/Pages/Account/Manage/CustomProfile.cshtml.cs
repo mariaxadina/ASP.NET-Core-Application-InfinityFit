@@ -1,5 +1,6 @@
 using InfinityFit.Data;
 using InfinityFit.Models;
+using InfinityFit.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -142,93 +143,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             return R * c;
         }
-        public async Task<IActionResult> OnPostGetLocationAsync()
-        {
-            CurrentUser = await _userManager.GetUserAsync(User);
-            if (CurrentUser == null) return NotFound("User not found");
-
-            var userId = CurrentUser.Id;
-
-            UserBadges = await _db.UserBadges
-                .Where(ub => ub.UserId == userId)
-                .Include(ub => ub.Badge)
-                .ToListAsync();
-
-            Posts = await _db.Posts
-                .Where(p => p.UserId == userId)
-                .Include(l => l.Likes)
-                .Include(c => c.Comments)
-                .OrderBy(d => d.DateOfCreation)
-                .ToListAsync();
-
-
-            float distanceGoal = CurrentUser.Daily_Distance_Goal ?? 0;
-
-            if (Latitude == null || Longitude == null || distanceGoal <= 0)
-            {
-                TempData["StatusMessage"] = "Coordinates or DailyDistanceGoal not set!";
-                return RedirectToPage();
-            }
-
-            try
-            {
-                var client = _http.CreateClient();
-                // Ob?ine p�n? la 10 obiective �n cerc cu raza mai mare pentru filtrare
-                string url = $"https://api.geoapify.com/v2/places?categories=tourism.sights&filter=circle:{Longitude},{Latitude},{distanceGoal * 2000}&limit=10&apiKey={_geoapifyKey}";
-
-                var response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-                using var stream = await response.Content.ReadAsStreamAsync();
-                using var doc = await JsonDocument.ParseAsync(stream);
-
-                // Ini?ializeaz? valori implicite
-                LocationOfTheDay = "No suitable location found";
-                TouristAddress = "";
-                TouristLatitude = null;
-                TouristLongitude = null;
-
-                if (doc.RootElement.TryGetProperty("features", out JsonElement features) && features.GetArrayLength() > 0)
-                {
-                    foreach (var feature in features.EnumerateArray())
-                    {
-                        var props = feature.GetProperty("properties");
-                        var geometry = feature.GetProperty("geometry");
-                        var coords = geometry.GetProperty("coordinates");
-                        double locLon = coords[0].GetDouble();
-                        double locLat = coords[1].GetDouble();
-
-                        // Distan?a fa?? de user
-                        double distKm = GetDistanceKm(Latitude.Value, Longitude.Value, locLat, locLon);
-
-                        // Verific?m dac? distan?a este aproximativ DailyDistanceGoal (�1 km)
-                        if (Math.Abs(distKm - distanceGoal) <= 1.0)
-                        {
-                            LocationOfTheDay = props.GetProperty("name").GetString() ?? "Unknown location";
-                            TouristAddress = props.TryGetProperty("formatted", out JsonElement formatted)
-                                ? formatted.GetString()
-                                : "Address unavailable";
-                            TouristLatitude = locLat;
-                            TouristLongitude = locLon;
-                            break;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                LocationOfTheDay = "Error fetching location!";
-                TouristAddress = "";
-                TouristLatitude = null;
-                TouristLongitude = null;
-            }
-
-            DailyDistanceGoal = CurrentUser.Daily_Distance_Goal;
-            TotalPoints = CurrentUser.TotalPoints;
-            Level = CurrentUser.Level;
-
-            return Page();
-        }
-
+        
 
 
         public async Task<IActionResult> OnPostDeletePostAsync(Guid postId)
@@ -250,6 +165,93 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             TempData["StatusMessage"] = "Post deleted successfully.";
             return RedirectToPage();
         }
+
+
+
+        public async Task<IActionResult> OnPostLikeAsync(Guid postId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return new JsonResult(new { error = "Not logged in" }) { StatusCode = 401 };
+
+            // Verificăm dacă user-ul a mai dat like
+            var existingLike = await _db.Likes
+                .FirstOrDefaultAsync(l => l.PostId == postId && l.UserId == user.Id);
+
+            if (existingLike != null)
+            {
+                // Ștergem like-ul
+                _db.Likes.Remove(existingLike);
+            }
+            else
+            {
+                var post = await _db.Posts.FindAsync(postId);
+                if (post == null) return NotFound();
+
+                var like = new Like
+                {
+                    UserId = user.Id,
+                    PostId = postId,
+                    User = user,
+                    Post = post
+                };
+                _db.Likes.Add(like);
+            }
+
+            await _db.SaveChangesAsync();
+
+            // Returnăm HTML-ul actualizat doar pentru numărul de like-uri
+            var likeCount = await _db.Likes.CountAsync(l => l.PostId == postId);
+            return Content($"<span id=\"like-count-{postId}\">{likeCount}</span>", "text/html");
+        }
+
+        public async Task<IActionResult> OnPostCommentAsync(Guid postId, string content, [FromServices] CommentModerationService moderation)
+        {
+            // 1?? Ob?ine utilizatorul logat
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+
+            // 2?? Verific?m comentariul prin AI
+            bool isSafe = await moderation.IsSafeAsync(content);
+
+            if (!isSafe)
+            {
+                TempData["CommentError"] = " Your comment was rejected because it violates our guidelines.";
+                return RedirectToPage();
+            }
+
+
+
+
+
+
+            // 3?? Ob?ine postarea din DB (trebuie neap?rat pentru proprietatea 'Post')
+            var post = await _db.Posts
+                .Include(p => p.Comments)   // op?ional, dac? vrei lista de comentarii imediat
+                .Include(p => p.User)       // necesar pentru Post.User dac? e required
+                .FirstOrDefaultAsync(p => p.Id == postId);
+
+            if (post == null)
+                return NotFound("Post not found");
+
+            // 4?? Creeaz? comentariul COMPLET, cu toate propriet??ile required setate
+            var comment = new Comment
+            {
+                Content = content,
+                UserId = user.Id,
+                PostId = post.Id,
+                User = user,
+                Post = post
+            };
+
+            // 5?? Adaug? ?i salveaz? în DB
+            _db.Comments.Add(comment);
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage();
+        }
+
 
     }
 }
