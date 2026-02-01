@@ -84,12 +84,12 @@ namespace InfinityFit.Services
                 }
 
                 // fallback: dacă structura JSON nu e cum ne așteptăm
-                return true;
+                return false;
             }
             catch
             {
                 // fallback dacă OpenAI nu răspunde
-                return true;
+                return false;
             }
         }
     }

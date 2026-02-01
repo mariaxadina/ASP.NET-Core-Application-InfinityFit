@@ -5,6 +5,25 @@
 }
 
 <link rel="stylesheet" href="~/css/home.css" />
+<link rel="stylesheet" href="~/css/Post.css" />
+
+
+
+<style>
+    .top-posts-grid {
+        display: flex; /* așază cardurile pe orizontală */
+        flex-wrap: wrap; /* permite trecerea pe rând dacă ecranul e mic */
+        gap: 20px; /* spațiu între carduri */
+        justify-content: center; /* centrează cardurile pe orizontală */
+    }
+
+    .top-posts-grid .post-card {
+        flex: 0 0 30%; /* fiecare card ocupă ~30% din lățime → 3 pe rând */
+        min-width: 250px; /* să nu se strângă prea mult pe ecrane mici */
+    }
+
+</style>
+
 
 
 <div class="hero">
@@ -13,6 +32,80 @@
         <p>Move. Explore. Achieve.</p>
     </div>
 </div>
+
+
+<div class="top-posts">
+    <h2>Top Posts</h2>
+
+    @if (!Model.TopPosts.Any())
+    {
+        <p>Nu există postări.</p>
+    }
+    else
+    {
+        <div class="top-posts-grid">
+            @foreach (var post in Model.TopPosts)
+            {
+                <div class="card mb-3 shadow-sm" style="max-width: 500px;">
+                    <div class="card-header py-2 d-flex justify-content-between align-items-center">
+                        <a asp-page="/Profile/Index"
+                           asp-route-username="@post.User.UserName"
+                           class="small fw-bold text-decoration-none">
+                            @post.User.UserName
+                        </a>
+
+                        <small class="text-muted">
+                            @post.DatePosted.ToLocalTime().ToString("dd MMM HH:mm")
+                        </small>
+                    </div>
+
+                    <img src="@post.ImagePath"
+                         class="card-img-top"
+                         style="max-height: 300px; object-fit: cover;" />
+
+                    <div class="card-body py-2">
+                        @if (!string.IsNullOrEmpty(post.Title))
+                        {
+                            <h6 class="mb-1">@post.Title</h6>
+                        }
+
+                        <p class="small mb-2 text-muted">
+                            @post.Description
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>
+                                <form method="post"
+                                      asp-page-handler="Like"
+                                      asp-route-postId="@post.Id"
+                                      class="d-inline">
+
+                                    <button hx-post="?handler=Like&postId=@post.Id"
+                                            hx-target="#like-count-@post.Id"
+                                            hx-swap="outerHTML">
+                                        ❤️ <span id="like-count-@post.Id">@post.Likes.Count</span>
+                                    </button>
+
+                                </form>
+
+                                |
+                                <button type="button"
+                                        class="btn btn-link p-0"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#commentsModal-@post.Id">
+                                    💬 @post.Comments.Count
+                                </button>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <partial name="_CommentsModal" model="post" />
+            }
+        </div>
+    }
+</div>
+
+
 
 <section class="mission">
     <h2>Our Mission</h2>
@@ -30,3 +123,11 @@
         as we promote your journey.
     </p>
 </section>
+
+
+
+
+@section Scripts {
+    <!-- AJAX PT ACTUALIZARE LIVE COMENTARII-->
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+}

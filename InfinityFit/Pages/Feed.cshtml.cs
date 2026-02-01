@@ -1,4 +1,4 @@
-using InfinityFit.Data;
+﻿using InfinityFit.Data;
 using InfinityFit.Models;
 using InfinityFit.Services;
 using Microsoft.AspNetCore.Identity;
@@ -37,39 +37,40 @@ namespace InfinityFit.Pages
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
-                return RedirectToPage("/Account/Login", new { area = "Identity" });
+                return new JsonResult(new { error = "Not logged in" }) { StatusCode = 401 };
 
-            bool alreadyLiked = await _context.Likes
-                .AnyAsync(l => l.PostId == postId && l.UserId == user.Id);
+            // Verificăm dacă user-ul a mai dat like
+            var existingLike = await _context.Likes
+                .FirstOrDefaultAsync(l => l.PostId == postId && l.UserId == user.Id);
 
-            if (!alreadyLiked)
+            if (existingLike != null)
+            {
+                // Ștergem like-ul
+                _context.Likes.Remove(existingLike);
+            }
+            else
             {
                 var post = await _context.Posts.FindAsync(postId);
-                if (post == null)
-                    return NotFound();
+                if (post == null) return NotFound();
 
                 var like = new Like
                 {
                     UserId = user.Id,
                     PostId = postId,
-                    User = user,   
-                    Post = post    
+                    User = user,
+                    Post = post
                 };
-
                 _context.Likes.Add(like);
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateException)
-                {
-                    // protec?ie suplimentar? (index unic)
-                }
             }
 
-            return RedirectToPage();
+            await _context.SaveChangesAsync();
+
+            // Returnăm HTML-ul actualizat doar pentru numărul de like-uri
+            var likeCount = await _context.Likes.CountAsync(l => l.PostId == postId);
+            return Content($"<span id=\"like-count-{postId}\">{likeCount}</span>", "text/html");
         }
+
+
 
         public async Task<IActionResult> OnPostCommentAsync(Guid postId, string content, [FromServices] CommentModerationService moderation)
         {
@@ -88,10 +89,6 @@ namespace InfinityFit.Pages
             }
 
            
-
-           
-
-
             // 3?? Ob?ine postarea din DB (trebuie neap?rat pentru proprietatea 'Post')
             var post = await _context.Posts
                 .Include(p => p.Comments)   // op?ional, dac? vrei lista de comentarii imediat
@@ -111,15 +108,12 @@ namespace InfinityFit.Pages
                 Post = post
             };
 
-            // 5?? Adaug? ?i salveaz? �n DB
+            // 5?? Adaug? ?i salveaz? în DB
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
             return RedirectToPage();
         }
-
-
-
 
     }
 }

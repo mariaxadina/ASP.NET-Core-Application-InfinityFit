@@ -1,0 +1,37 @@
+﻿body {
+}
+
+
+.badge-grid {
+    display: flex; /* așază badge-urile pe orizontală */
+    flex-wrap: wrap; /* permite trecerea pe rândul următor dacă e prea înghesuit */
+    gap: 20px; /* spațiu între badge-uri */
+    justify-content: start; /* centrează toate badge-urile pe rând */
+    margin-top: 20px;
+}
+
+.badge-card {
+    display: flex;
+    flex-direction: column; /* imagine + text unul sub altul */
+    align-items: center; /* centrează conținutul */
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 150px; /* poți ajusta dimensiunea */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center; /* centrează textul */
+    background-color: #f9f9f9;
+    transition: transform 0.2s;
+}
+
+.badge-card:hover {
+    transform: scale(1.05); /* efect mic la hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.badge-card img {
+    width: 120px; /* dimensiunea imaginii */
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
