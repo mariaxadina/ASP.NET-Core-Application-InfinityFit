@@ -14,6 +14,7 @@ namespace InfinityFit.Models
         [StringLength(2000)]
         public string? Description { get; set; }
 
+
         [Required]
         public required string ImagePath { get; set; }
 

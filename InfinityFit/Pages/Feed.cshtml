@@ -20,11 +20,23 @@
                        class="small fw-bold text-decoration-none">
                         @post.User.UserName
                     </a>
+                    
 
                     <small class="text-muted">
                         @post.DatePosted.ToLocalTime().ToString("dd MMM HH:mm")
                     </small>
+                    @* See location link *@
+                    @if (post.Latitude != 0 && post.Longitude != 0)
+                    {
+                        <a href="https://www.google.com/maps?q=@post.Latitude,@post.Longitude"
+                           target="_blank"
+                           class="small text-primary text-decoration-none mt-1">
+                            See location
+                        </a>
+                    }
+
                 </div>
+
 
                 <img src="@post.ImagePath"
                      class="card-img-top"

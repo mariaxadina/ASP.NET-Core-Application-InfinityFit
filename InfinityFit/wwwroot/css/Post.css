@@ -1,6 +1,52 @@
 ﻿body {
 }
 
+/* =========================
+   TOP POSTS GRID
+========================= */
+
+.top-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 pe desktop */
+    gap: 20px;
+}
+
+    /* Cardurile egale ca înălțime */
+    .top-posts-grid .card {
+        flex: 0 0 30%;   /* exact 3 pe rând */
+        max-width: 30%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Imaginea să fie identică ca dimensiune */
+    .top-posts-grid img {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    /* Body-ul să umple cardul */
+    .top-posts-grid .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+/* 📱 Responsive pentru telefon */
+@media (max-width: 768px) {
+    .top-posts-grid {
+        grid-template-columns: 1fr; /* una sub alta */
+    }
+
+        .top-posts-grid img {
+            height: 200px;
+        }
+}
+
+/* =========================
+   POST GRID GENERAL
+========================= */
 
 .post-grid {
     display: grid;
@@ -92,8 +138,10 @@
     margin-top: 5px;
 }
 
+/* =========================
+   MODAL
+========================= */
 
-/* MODAL */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -131,6 +179,10 @@
     cursor: pointer;
 }
 
+    .confirm-delete:hover {
+        background: #c9302c;
+    }
+
 .cancel-delete {
     background: #6c757d;
     color: white;
@@ -139,3 +191,7 @@
     border-radius: 6px;
     cursor: pointer;
 }
+
+    .cancel-delete:hover {
+        background: #5a6268;
+    }

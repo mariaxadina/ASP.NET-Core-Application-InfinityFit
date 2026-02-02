@@ -1,0 +1,42 @@
+﻿@page
+@model InfinityFit.Pages.ArcadeModel
+<link rel="stylesheet" href="~/css/Arcade.css" />
+
+<div class="arcade-page">
+
+    <h1 class="arcade-title">🎮 Daily Quiz</h1>
+
+    <p class="arcade-description">
+        Play our daily game and win <strong>extra points</strong> for your fitness journey!
+        You can play only once per day — come back tomorrow for a new challenge!
+    </p>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="arcade-message">
+            @Model.Message
+        </div>
+    }
+
+    @if (Model.Message == null)
+    {
+        <div class="quiz-box">
+            <form method="post">
+                <p class="quiz-question">@Model.Question</p>
+
+                @foreach (var ans in Model.Answers)
+                {
+                    <label class="quiz-answer">
+                        <input type="radio" name="SelectedAnswer" value="@ans" required />
+                        <span>@ans</span>
+                    </label>
+                }
+
+                <input type="hidden" name="correctAnswer" value="@Model.CorrectAnswer" />
+
+                <button type="submit" class="quiz-button">Answer</button>
+            </form>
+        </div>
+    }
+
+</div>

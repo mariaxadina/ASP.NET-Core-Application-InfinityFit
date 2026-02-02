@@ -46,7 +46,7 @@
         <div class="top-posts-grid">
             @foreach (var post in Model.TopPosts)
             {
-                <div class="card mb-3 shadow-sm" style="max-width: 500px;">
+                <div class="card mb-3 shadow-sm" ">
                     <div class="card-header py-2 d-flex justify-content-between align-items-center">
                         <a asp-page="/Profile/Index"
                            asp-route-username="@post.User.UserName"
