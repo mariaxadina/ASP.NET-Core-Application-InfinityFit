@@ -4,6 +4,7 @@ using InfinityFit.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfinityFit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260202181915_Badge")]
+    partial class Badge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,15 +55,15 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8329),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7793),
                             Description = "You have created your account!",
-                            Icon = "/images/welcome.png",
+                            Icon = "/images/1.png",
                             Name = "Welcome"
                         },
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000001"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8391),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7860),
                             Description = "You posted for the first time",
                             Icon = "/images/post1.png",
                             Name = "First Post"
@@ -68,7 +71,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000005"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8404),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7865),
                             Description = "You made 5 posts",
                             Icon = "/images/post5.png",
                             Name = "Traveler"
@@ -76,7 +79,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000020"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8408),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7869),
                             Description = "You made 20 posts",
                             Icon = "/images/post20.png",
                             Name = "Explorer"
@@ -84,7 +87,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8410),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7872),
                             Description = "You made 50 posts",
                             Icon = "/images/post50.png",
                             Name = "Adventurer"
@@ -92,7 +95,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8413),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7878),
                             Description = "You made 100 posts",
                             Icon = "/images/post100.png",
                             Name = "Storyteller"
@@ -100,7 +103,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000250"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8415),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7885),
                             Description = "You made 250 posts",
                             Icon = "/images/post250.png",
                             Name = "Content Creator"
@@ -108,7 +111,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000000500"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8418),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7906),
                             Description = "You made 500 posts",
                             Icon = "/images/post500.png",
                             Name = "Master Explorer"
@@ -116,7 +119,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("10000000-0000-0000-0000-000000001000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8420),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7919),
                             Description = "You made 1,000 posts",
                             Icon = "/images/post1000.png",
                             Name = "Legendary Poster"
@@ -124,7 +127,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("20000000-0000-0000-0000-000000000005"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8423),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7925),
                             Description = "Reached level 5",
                             Icon = "/images/level5.png",
                             Name = "Getting Started"
@@ -132,7 +135,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("20000000-0000-0000-0000-000000000010"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8427),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7930),
                             Description = "Reached level 10",
                             Icon = "/images/level10.png",
                             Name = "Rising Star"
@@ -140,7 +143,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("20000000-0000-0000-0000-000000000020"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8430),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7933),
                             Description = "Reached level 20",
                             Icon = "/images/level20.png",
                             Name = "Challenger"
@@ -148,7 +151,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("20000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8432),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7935),
                             Description = "Reached level 50",
                             Icon = "/images/level50.png",
                             Name = "Veteran Explorer"
@@ -156,7 +159,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("20000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8435),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7938),
                             Description = "Reached level 100",
                             Icon = "/images/level100.png",
                             Name = "Legend of InfinityFit"
@@ -164,7 +167,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000000001"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8437),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7940),
                             Description = "Gave your first like",
                             Icon = "/images/like1.png",
                             Name = "First Love"
@@ -172,7 +175,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000000010"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8440),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7947),
                             Description = "Gave 10 likes",
                             Icon = "/images/like10.png",
                             Name = "Supporter"
@@ -180,7 +183,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8442),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7949),
                             Description = "Gave 50 likes",
                             Icon = "/images/like50.png",
                             Name = "Positive Vibes"
@@ -188,7 +191,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8446),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7952),
                             Description = "Gave 100 likes",
                             Icon = "/images/like100.png",
                             Name = "Community Booster"
@@ -196,7 +199,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000000500"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8452),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7954),
                             Description = "Gave 500 likes",
                             Icon = "/images/like500.png",
                             Name = "Influencer"
@@ -204,7 +207,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000001000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8456),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7958),
                             Description = "Gave 1,000 likes",
                             Icon = "/images/like1000.png",
                             Name = "Social Machine"
@@ -212,7 +215,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("30000000-0000-0000-0000-000000005000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8459),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7961),
                             Description = "Gave 5,000 likes",
                             Icon = "/images/like5000.png",
                             Name = "Infinity Reactor"
@@ -220,7 +223,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000001"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8461),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7963),
                             Description = "Posted your first comment",
                             Icon = "/images/comment1.png",
                             Name = "First Words"
@@ -228,7 +231,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000005"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8464),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7965),
                             Description = "Posted 5 comments",
                             Icon = "/images/comment5.png",
                             Name = "Conversationalist"
@@ -236,7 +239,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000015"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8466),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7969),
                             Description = "Posted 15 comments",
                             Icon = "/images/comment15.png",
                             Name = "Active Voice"
@@ -244,7 +247,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8469),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7972),
                             Description = "Posted 50 comments",
                             Icon = "/images/comment50.png",
                             Name = "Discussion Leader"
@@ -252,7 +255,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8473),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7974),
                             Description = "Posted 100 comments",
                             Icon = "/images/comment100.png",
                             Name = "Community Speaker"
@@ -260,7 +263,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000250"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8478),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7976),
                             Description = "Posted 250 comments",
                             Icon = "/images/comment250.png",
                             Name = "Debater Pro"
@@ -268,7 +271,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000000500"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8481),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7979),
                             Description = "Posted 500 comments",
                             Icon = "/images/comment500.png",
                             Name = "Social Anchor"
@@ -276,7 +279,7 @@ namespace InfinityFit.Migrations
                         new
                         {
                             Id = new Guid("40000000-0000-0000-0000-000000001000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8486),
+                            DateOfCreation = new DateTime(2026, 2, 2, 20, 19, 14, 781, DateTimeKind.Local).AddTicks(7981),
                             Description = "Posted 1,000 comments",
                             Icon = "/images/comment1000.png",
                             Name = "Voice of Infinity"

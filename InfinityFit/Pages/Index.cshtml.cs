@@ -10,13 +10,21 @@ public class IndexModel : PageModel
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<User> _userManager;
+    private readonly BadgeService _badgeService;
+    private readonly UserProgressService _userProgressService;
 
-    public IndexModel(ApplicationDbContext context, UserManager<User> userManager)
+    public IndexModel(ApplicationDbContext context, UserManager<User> userManager,
+                      BadgeService badgeService, UserProgressService userProgressService)
     {
         _context = context;
         _userManager = userManager;
+        _badgeService = badgeService;
+        _userProgressService = userProgressService;
     }
 
+
+    private const int POINTS_FOR_NEW_LIKE = 5;
+    private const int POINTS_FOR_NEW_COMMENT = 10;
 
     public List<Comment> Comments { get; set; } = new();
     public List<Post> TopPosts { get; set; } = new();
@@ -47,6 +55,7 @@ public class IndexModel : PageModel
         {
             // Ștergem like-ul
             _context.Likes.Remove(existingLike);
+            await _userProgressService.AddPointsAsync(user, -POINTS_FOR_NEW_LIKE);
         }
         else
         {
@@ -61,6 +70,9 @@ public class IndexModel : PageModel
                 Post = post
             };
             _context.Likes.Add(like);
+            await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_LIKE);
+            var userId = user.Id;
+            await _badgeService.CheckPostingBadgesAsync(userId);
         }
 
         await _context.SaveChangesAsync();
@@ -111,6 +123,10 @@ public class IndexModel : PageModel
         // 5?? Adaug? ?i salveaz? în DB
         _context.Comments.Add(comment);
         await _context.SaveChangesAsync();
+
+        await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_COMMENT);
+        var userId = user.Id;
+        await _badgeService.CheckPostingBadgesAsync(userId);
 
         return RedirectToPage();
     }

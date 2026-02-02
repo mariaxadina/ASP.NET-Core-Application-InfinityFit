@@ -1,0 +1,23 @@
+﻿.level-progress-container {
+    width: 100%;
+    max-width: 400px;
+    height: 18px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.level-progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    border-radius: 10px;
+    transition: width 0.8s ease-in-out;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    margin-top: 4px;
+    color: #555;
+}

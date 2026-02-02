@@ -12,12 +12,21 @@ namespace InfinityFit.Pages.Profile
     {
         private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _db;
+        private readonly UserProgressService _userProgressService;
+        private readonly BadgeService _badgeService;
 
-        public IndexModel(UserManager<User> userManager, ApplicationDbContext db)
+        public IndexModel(UserManager<User> userManager, ApplicationDbContext db,
+                                  UserProgressService userProgressService,
+                                  BadgeService badgeService)
         {
             _userManager = userManager;
             _db = db;
+            _userProgressService = userProgressService;
+            _badgeService = badgeService;
         }
+
+        private const int POINTS_FOR_NEW_LIKE = 5;
+        private const int POINTS_FOR_NEW_COMMENT = 10;
 
         public User ProfileUser { get; set; }
         public IList<UserBadge> UserBadges { get; set; } = new List<UserBadge>();
@@ -92,6 +101,7 @@ namespace InfinityFit.Pages.Profile
             {
                 // Ștergem like-ul
                 _db.Likes.Remove(existingLike);
+                await _userProgressService.AddPointsAsync(user, -POINTS_FOR_NEW_LIKE);
             }
             else
             {
@@ -106,6 +116,9 @@ namespace InfinityFit.Pages.Profile
                     Post = post
                 };
                 _db.Likes.Add(like);
+                await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_LIKE);
+                var userId = user.Id;
+                await _badgeService.CheckPostingBadgesAsync(userId);
             }
 
             await _db.SaveChangesAsync();
@@ -158,6 +171,10 @@ namespace InfinityFit.Pages.Profile
             // 5?? Adaug? ?i salveaz? în DB
             _db.Comments.Add(comment);
             await _db.SaveChangesAsync();
+
+            await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_COMMENT);
+            var userId = user.Id;
+            await _badgeService.CheckPostingBadgesAsync(userId);
 
             return RedirectToPage();
         }

@@ -4,6 +4,7 @@ using InfinityFit.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfinityFit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260202161035_LevelUp")]
+    partial class LevelUp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,235 +54,35 @@ namespace InfinityFit.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8329),
-                            Description = "You have created your account!",
-                            Icon = "/images/welcome.png",
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            DateOfCreation = new DateTime(2026, 2, 2, 18, 10, 34, 425, DateTimeKind.Local).AddTicks(9960),
+                            Description = "Ți-ai creat contul",
+                            Icon = "/images/1.png",
                             Name = "Welcome"
                         },
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000001"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8391),
-                            Description = "You posted for the first time",
-                            Icon = "/images/post1.png",
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            DateOfCreation = new DateTime(2026, 2, 2, 18, 10, 34, 426, DateTimeKind.Local).AddTicks(26),
+                            Description = "Ai făcut prima ta postare",
+                            Icon = "/images/2.png",
                             Name = "First Post"
                         },
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000005"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8404),
-                            Description = "You made 5 posts",
-                            Icon = "/images/post5.png",
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            DateOfCreation = new DateTime(2026, 2, 2, 18, 10, 34, 426, DateTimeKind.Local).AddTicks(30),
+                            Description = "Ai făcut 5 postări",
+                            Icon = "/images/3.png",
                             Name = "Traveler"
                         },
                         new
                         {
-                            Id = new Guid("10000000-0000-0000-0000-000000000020"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8408),
-                            Description = "You made 20 posts",
-                            Icon = "/images/post20.png",
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            DateOfCreation = new DateTime(2026, 2, 2, 18, 10, 34, 426, DateTimeKind.Local).AddTicks(33),
+                            Description = "Ai făcut 20 de postări",
+                            Icon = "/images/4.png",
                             Name = "Explorer"
-                        },
-                        new
-                        {
-                            Id = new Guid("10000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8410),
-                            Description = "You made 50 posts",
-                            Icon = "/images/post50.png",
-                            Name = "Adventurer"
-                        },
-                        new
-                        {
-                            Id = new Guid("10000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8413),
-                            Description = "You made 100 posts",
-                            Icon = "/images/post100.png",
-                            Name = "Storyteller"
-                        },
-                        new
-                        {
-                            Id = new Guid("10000000-0000-0000-0000-000000000250"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8415),
-                            Description = "You made 250 posts",
-                            Icon = "/images/post250.png",
-                            Name = "Content Creator"
-                        },
-                        new
-                        {
-                            Id = new Guid("10000000-0000-0000-0000-000000000500"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8418),
-                            Description = "You made 500 posts",
-                            Icon = "/images/post500.png",
-                            Name = "Master Explorer"
-                        },
-                        new
-                        {
-                            Id = new Guid("10000000-0000-0000-0000-000000001000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8420),
-                            Description = "You made 1,000 posts",
-                            Icon = "/images/post1000.png",
-                            Name = "Legendary Poster"
-                        },
-                        new
-                        {
-                            Id = new Guid("20000000-0000-0000-0000-000000000005"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8423),
-                            Description = "Reached level 5",
-                            Icon = "/images/level5.png",
-                            Name = "Getting Started"
-                        },
-                        new
-                        {
-                            Id = new Guid("20000000-0000-0000-0000-000000000010"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8427),
-                            Description = "Reached level 10",
-                            Icon = "/images/level10.png",
-                            Name = "Rising Star"
-                        },
-                        new
-                        {
-                            Id = new Guid("20000000-0000-0000-0000-000000000020"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8430),
-                            Description = "Reached level 20",
-                            Icon = "/images/level20.png",
-                            Name = "Challenger"
-                        },
-                        new
-                        {
-                            Id = new Guid("20000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8432),
-                            Description = "Reached level 50",
-                            Icon = "/images/level50.png",
-                            Name = "Veteran Explorer"
-                        },
-                        new
-                        {
-                            Id = new Guid("20000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8435),
-                            Description = "Reached level 100",
-                            Icon = "/images/level100.png",
-                            Name = "Legend of InfinityFit"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000000001"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8437),
-                            Description = "Gave your first like",
-                            Icon = "/images/like1.png",
-                            Name = "First Love"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000000010"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8440),
-                            Description = "Gave 10 likes",
-                            Icon = "/images/like10.png",
-                            Name = "Supporter"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8442),
-                            Description = "Gave 50 likes",
-                            Icon = "/images/like50.png",
-                            Name = "Positive Vibes"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8446),
-                            Description = "Gave 100 likes",
-                            Icon = "/images/like100.png",
-                            Name = "Community Booster"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000000500"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8452),
-                            Description = "Gave 500 likes",
-                            Icon = "/images/like500.png",
-                            Name = "Influencer"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000001000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8456),
-                            Description = "Gave 1,000 likes",
-                            Icon = "/images/like1000.png",
-                            Name = "Social Machine"
-                        },
-                        new
-                        {
-                            Id = new Guid("30000000-0000-0000-0000-000000005000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8459),
-                            Description = "Gave 5,000 likes",
-                            Icon = "/images/like5000.png",
-                            Name = "Infinity Reactor"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000001"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8461),
-                            Description = "Posted your first comment",
-                            Icon = "/images/comment1.png",
-                            Name = "First Words"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000005"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8464),
-                            Description = "Posted 5 comments",
-                            Icon = "/images/comment5.png",
-                            Name = "Conversationalist"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000015"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8466),
-                            Description = "Posted 15 comments",
-                            Icon = "/images/comment15.png",
-                            Name = "Active Voice"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000050"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8469),
-                            Description = "Posted 50 comments",
-                            Icon = "/images/comment50.png",
-                            Name = "Discussion Leader"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000100"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8473),
-                            Description = "Posted 100 comments",
-                            Icon = "/images/comment100.png",
-                            Name = "Community Speaker"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000250"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8478),
-                            Description = "Posted 250 comments",
-                            Icon = "/images/comment250.png",
-                            Name = "Debater Pro"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000000500"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8481),
-                            Description = "Posted 500 comments",
-                            Icon = "/images/comment500.png",
-                            Name = "Social Anchor"
-                        },
-                        new
-                        {
-                            Id = new Guid("40000000-0000-0000-0000-000000001000"),
-                            DateOfCreation = new DateTime(2026, 2, 2, 20, 59, 4, 324, DateTimeKind.Local).AddTicks(8486),
-                            Description = "Posted 1,000 comments",
-                            Icon = "/images/comment1000.png",
-                            Name = "Voice of Infinity"
                         });
                 });
 
