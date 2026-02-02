@@ -19,14 +19,25 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
         private readonly IHttpClientFactory _http;
         private readonly string _geoapifyKey;
         private readonly ApplicationDbContext _db;
+        private readonly UserProgressService _userProgressService;
+        private readonly BadgeService _badgeService;
 
-        public CustomProfileModel(UserManager<User> userManager, IHttpClientFactory http, IOptions<InfinityFit.Options.Geoapify> geoapifyOptions, ApplicationDbContext db)
+        public CustomProfileModel(UserManager<User> userManager, IHttpClientFactory http, 
+                                  IOptions<InfinityFit.Options.Geoapify> geoapifyOptions, 
+                                  UserProgressService userProgressService, 
+                                  BadgeService badgeService, ApplicationDbContext db)
         {
             _userManager = userManager;
             _http = http;
             _geoapifyKey = geoapifyOptions.Value.ApiKey;
+            _userProgressService = userProgressService;
+            _badgeService = badgeService;
             _db = db;
         }
+
+        private const int POINTS_FOR_NEW_LIKE = 5;
+        private const int POINTS_FOR_NEW_COMMENT = 10;
+
 
         // The currently logged-in user
         public User CurrentUser { get; set; }
@@ -74,13 +85,14 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             UserBadges = await _db.UserBadges
                 .Where(ub => ub.UserId == userId)
                 .Include(ub => ub.Badge)
+                .OrderByDescending(d => d.DateAwarded)
                 .ToListAsync();
 
             Posts = await _db.Posts
                 .Where(p => p.UserId == userId)
                 .Include(l => l.Likes)
                 .Include(c => c.Comments)
-                .OrderBy(d => d.DateOfCreation)
+                .OrderByDescending(d => d.DateOfCreation)
                 .ToListAsync();
         }
 
@@ -182,6 +194,7 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             {
                 // Ștergem like-ul
                 _db.Likes.Remove(existingLike);
+                await _userProgressService.AddPointsAsync(user, -POINTS_FOR_NEW_LIKE);
             }
             else
             {
@@ -196,6 +209,9 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
                     Post = post
                 };
                 _db.Likes.Add(like);
+                await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_LIKE);
+                var userId = user.Id;
+                await _badgeService.CheckPostingBadgesAsync(userId);
             }
 
             await _db.SaveChangesAsync();
@@ -248,6 +264,10 @@ namespace InfinityFit.Areas.Identity.Pages.Account.Manage
             // 5?? Adaug? ?i salveaz? în DB
             _db.Comments.Add(comment);
             await _db.SaveChangesAsync();
+
+            await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_COMMENT);
+            var userId = user.Id;
+            await _badgeService.CheckPostingBadgesAsync(userId);
 
             return RedirectToPage();
         }

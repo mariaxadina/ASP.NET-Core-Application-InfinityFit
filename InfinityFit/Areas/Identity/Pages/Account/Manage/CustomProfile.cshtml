@@ -11,13 +11,16 @@
 <!-- CSS -->
 <link rel="stylesheet" href="~/css/Badge.css" />
 <link rel="stylesheet" href="~/css/Post.css" />
-
+<link rel="stylesheet" href="~/css/Progres.css" />
+<link rel="stylesheet" href="~/css/LevelUp.css" />
 
 
 @if (TempData["StatusMessage"] != null)
 {
     <div class="alert alert-success">@TempData["StatusMessage"]</div>
 }
+
+
 <p><strong style="color:blue;">Level:</strong> <span style="color:green;">@Model.CurrentUser.Level</span></p>
 
 @{
@@ -37,6 +40,50 @@ else
         <span style="color:orange; font-weight:bold;">You have to create a post to earn points</span>
     </p>
 }
+
+
+@{
+    int level = Model.CurrentUser.Level ?? 1;
+    int totalPoints = Model.CurrentUser.TotalPoints ?? 0;
+
+    int currentLevelStart = (level - 1) * (level - 1) * 100;
+    int nextLevelPoints = level * level * 100;
+
+    int pointsInLevel = totalPoints - currentLevelStart;
+    int levelRange = nextLevelPoints - currentLevelStart;
+
+    int progressPercent = levelRange > 0
+        ? (int)((double)pointsInLevel / levelRange * 100)
+        : 0;
+
+    progressPercent = Math.Clamp(progressPercent, 0, 100);
+}
+
+
+<p>
+    Progress to next level:
+    @Model.CurrentUser.TotalPoints / @nextLevelPoints
+</p>
+
+
+<div class="level-progress-container">
+    <div class="level-progress-bar"
+         style="width:@progressPercent%">
+    </div>
+</div>
+
+
+
+@if (Model.CurrentUser.LastLevelUp != null &&
+     Model.CurrentUser.LastLevelUp > DateTime.UtcNow.AddSeconds(-5))
+{
+    <div class="level-up-animation">
+        🎉 LEVEL UP! 🎉
+    </div>
+}
+
+
+
 
 <a <a class="nav-link text-dark create-post" asp-page="/Posts/Create">➕ Create post</a>
 

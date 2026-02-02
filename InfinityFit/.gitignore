@@ -22,3 +22,11 @@ appsettings.Local.json
 
 # Rider
 .idea/
+
+
+# user uploads (dynamic)
+wwwroot/uploads/
+
+# static assets (keep these!)
+!wwwroot/images/
+!wwwroot/images/**

@@ -20,9 +20,10 @@ namespace InfinityFit.Pages.Posts
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _env;
         private readonly BadgeService _badgeService;
+        private readonly UserProgressService _userProgressService;
 
         public CreateModel(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment env, BadgeService badgeService,
-                           SignInManager<User> signinmanager 
+                           UserProgressService userProgressService, SignInManager<User> signinmanager 
                             )
         {
             _context = context;
@@ -30,6 +31,7 @@ namespace InfinityFit.Pages.Posts
             _env = env;
             _badgeService = badgeService;
             _signInManager = signinmanager;
+            _userProgressService = userProgressService;
         }
 
         [BindProperty]
@@ -96,21 +98,20 @@ namespace InfinityFit.Pages.Posts
 
             
 
-            user.TotalPoints =(user.TotalPoints ?? 0) + POINTS_FOR_NEW_POST;
+           
+            await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_POST);
             
-            var userId = user.Id;
-            await _badgeService.CheckPostingBadgesAsync(userId);
 
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
 
-         
+            var userId = user.Id;
+            await _badgeService.CheckPostingBadgesAsync(userId);
 
-            
 
-            return RedirectToPage("/Index");
+            return RedirectToPage( "/Account/Manage/CustomProfile",new { area = "Identity" } );
         }
     }
 }

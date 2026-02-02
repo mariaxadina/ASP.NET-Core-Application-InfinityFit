@@ -66,6 +66,97 @@ namespace InfinityFit.Services
 
             if (postCount >= 20)
                 await AwardBadgeByNameAsync(userId, "Explorer");
+
+            if (postCount >= 50)
+                await AwardBadgeByNameAsync(userId, "Adventurer");
+
+            if (postCount >= 100)
+                await AwardBadgeByNameAsync(userId, "Storyteller");
+
+            if (postCount >= 250)
+                await AwardBadgeByNameAsync(userId, "Content Creator");
+
+            if (postCount >= 500)
+                await AwardBadgeByNameAsync(userId, "Master Explorer");
+
+            if (postCount >= 1000)
+                await AwardBadgeByNameAsync(userId, "Legendary Poster");
+
+            var user = await _db.Users
+                .Where(u => u.Id == userId)
+                .FirstOrDefaultAsync();
+            int? level = user.Level;
+
+            if (level >= 5)
+                await AwardBadgeByNameAsync(userId, "Getting Started");
+
+            if (level >= 10)
+                await AwardBadgeByNameAsync(userId, "Rising Star");
+
+            if (level >= 20)
+                await AwardBadgeByNameAsync(userId, "Challenger");
+
+            if (level >= 50)
+                await AwardBadgeByNameAsync(userId, "Veteran Explorer");
+
+            if (level >= 100)
+                await AwardBadgeByNameAsync(userId, "Legend of InfinityFit");
+
+
+
+            int likesCount = await _db.Likes
+                .CountAsync(p => p.UserId == userId);
+
+            if (likesCount >= 1)
+                await AwardBadgeByNameAsync(userId, "First Love");
+
+            if (likesCount >= 10)
+                await AwardBadgeByNameAsync(userId, "Supporter");
+
+            if (likesCount >= 50)
+                await AwardBadgeByNameAsync(userId, "Positive Vibes");
+
+            if (likesCount >= 100)
+                await AwardBadgeByNameAsync(userId, "Community Booster");
+
+            if (likesCount >= 500)
+                await AwardBadgeByNameAsync(userId, "Influencer");
+
+            if (likesCount >= 1000)
+                await AwardBadgeByNameAsync(userId, "Social Machine");
+
+            if (likesCount >= 5000)
+                await AwardBadgeByNameAsync(userId, "Infinity Reactor");
+
+
+
+            int commentsCount = await _db.Comments
+                .CountAsync(p => p.UserId == userId);
+
+            if (likesCount >= 1)
+                await AwardBadgeByNameAsync(userId, "First Words");
+
+            if (likesCount >= 5)
+                await AwardBadgeByNameAsync(userId, "Conversationalist");
+
+            if (likesCount >= 15)
+                await AwardBadgeByNameAsync(userId, "Active Voice");
+
+            if (likesCount >= 50)
+                await AwardBadgeByNameAsync(userId, "Discussion Leader");
+
+            if (likesCount >= 100)
+                await AwardBadgeByNameAsync(userId, "Community Speaker");
+
+            if (likesCount >= 250)
+                await AwardBadgeByNameAsync(userId, "Debater Pro");
+
+            if (likesCount >= 500)
+                await AwardBadgeByNameAsync(userId, "Social Anchor");
+
+            if (likesCount >= 1000)
+                await AwardBadgeByNameAsync(userId, "Voice of Infinity");
+
         }
     }
 }

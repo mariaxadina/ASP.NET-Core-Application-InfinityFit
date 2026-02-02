@@ -12,13 +12,20 @@ namespace InfinityFit.Pages
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly UserProgressService _userProgressService;
+        private readonly BadgeService _badgeService;
 
-        public FeedModel(ApplicationDbContext context, UserManager<User> userManager)
+        public FeedModel(ApplicationDbContext context, UserManager<User> userManager,
+                         BadgeService badgeService, UserProgressService userProgressService)
         {
             _context = context;
             _userManager = userManager;
+            _badgeService = badgeService;
+            _userProgressService = userProgressService;
         }
 
+        private const int POINTS_FOR_NEW_LIKE = 5;
+        private const int POINTS_FOR_NEW_COMMENT = 10;
 
         public List<Post> Posts { get; set; } = new();
         public List<Comment> Comments { get; set; } = new();
@@ -47,6 +54,7 @@ namespace InfinityFit.Pages
             {
                 // Ștergem like-ul
                 _context.Likes.Remove(existingLike);
+                await _userProgressService.AddPointsAsync(user, -POINTS_FOR_NEW_LIKE);
             }
             else
             {
@@ -61,6 +69,9 @@ namespace InfinityFit.Pages
                     Post = post
                 };
                 _context.Likes.Add(like);
+                await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_LIKE);
+                var userId = user.Id;
+                await _badgeService.CheckPostingBadgesAsync(userId);
             }
 
             await _context.SaveChangesAsync();
@@ -111,6 +122,10 @@ namespace InfinityFit.Pages
             // 5?? Adaug? ?i salveaz? în DB
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
+
+            await _userProgressService.AddPointsAsync(user, POINTS_FOR_NEW_COMMENT);
+            var userId = user.Id;
+            await _badgeService.CheckPostingBadgesAsync(userId);
 
             return RedirectToPage();
         }
