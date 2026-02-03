@@ -22,6 +22,8 @@ namespace InfinityFit.Data
         public DbSet<DailyLocation> DailyLocations { get; set; }
 
         public DbSet<DailyQuizPlay> DailyQuizPlays { get; set; }
+        public DbSet<DailySpinPlay> DailySpinPlays { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
