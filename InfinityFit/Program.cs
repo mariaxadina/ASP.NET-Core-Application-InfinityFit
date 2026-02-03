@@ -30,6 +30,7 @@ public class Program
         builder.Services.AddScoped<BadgeService>();
         builder.Services.AddScoped<LeaderboardService>();
         builder.Services.AddScoped<UserProgressService>();
+        builder.Services.AddScoped<MonthlyChallengeService>();
 
 
         var app = builder.Build();

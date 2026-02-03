@@ -32,7 +32,40 @@
         <p>Move. Explore. Achieve.</p>
     </div>
 </div>
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <div class="container my-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="mb-2">🏆 Monthly Challenge</h4>
+                <p class="mb-1">
+                    Post from <strong>30 different locations</strong> this month
+                </p>
 
+                <div class="progress my-3" style="height: 20px;">
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width:@(Model.MonthlyProgress * 100 /30)%">
+                        @Model.MonthlyProgress / 30
+                    </div>
+                </div>
+
+                @if (Model.MonthlyProgress >=30)
+                {
+                    <span class="badge bg-warning text-dark">
+                        🎉 Challenge completed! Bonus unlocked
+                    </span>
+                }
+                else
+                {
+                    <small class="text-muted">
+                        Keep exploring new places 🚶‍♂️📍
+                    </small>
+                }
+            </div>
+        </div>
+    </div>
+}
 
 <div class="top-posts">
     <h2>Top Posts</h2>
