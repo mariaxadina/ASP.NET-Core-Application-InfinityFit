@@ -4,11 +4,6 @@
     ViewData["Title"] = "Home page";
 }
 
-<link rel="stylesheet" href="~/css/home.css" />
-<link rel="stylesheet" href="~/css/Post.css" />
-
-
-
 <style>
     .top-posts-grid {
         display: flex; /* așază cardurile pe orizontală */
@@ -21,17 +16,28 @@
         flex: 0 0 30%; /* fiecare card ocupă ~30% din lățime → 3 pe rând */
         min-width: 250px; /* să nu se strângă prea mult pe ecrane mici */
     }
-
 </style>
 
 
 
 <div class="hero">
+    <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1>Welcome to <span>InfinityFit</span></h1>
         <p>Move. Explore. Achieve.</p>
+
+        @if (!User.Identity?.IsAuthenticated ?? true)
+        {
+            <a asp-page="/Account/Register" class="btn btn-hero mt-3">
+                Start Your Journey 🚀
+            </a>
+        }
     </div>
 </div>
+
+
+
+
 @if (User.Identity?.IsAuthenticated == true)
 {
     <div class="container my-4">
@@ -142,20 +148,23 @@
 
 <section class="mission">
     <h2>Our Mission</h2>
-    <p>
-        We promote tourism through movement and motivation.
-        Set your goal, start visiting landmarks today, and turn every step into progress.
-    </p>
-    <p>
-        We guide you to exciting locations, challenge you to exercise as you move,
-        and let you upload your achievements as photos.
-    </p>
-    <p>
-        Curious about your gains?
-        Collect badges, track your progress, and get rewarded with vouchers
-        as we promote your journey.
-    </p>
+
+    <div class="mission-grid">
+        <div class="mission-card">
+            🚶‍♂️ Move with purpose
+            <p>Turn movement into meaningful progress.</p>
+        </div>
+        <div class="mission-card">
+            📍 Explore locations
+            <p>Discover landmarks and hidden gems.</p>
+        </div>
+        <div class="mission-card">
+            🏅 Get rewarded
+            <p>Earn badges, vouchers, and achievements.</p>
+        </div>
+    </div>
 </section>
+
 
 
 
