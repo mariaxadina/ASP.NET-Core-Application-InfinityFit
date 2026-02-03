@@ -7,62 +7,70 @@ html, body {
 
 /* HERO SECTION */
 .hero {
-    min-height: 100vh;
-    width: 100%;
-    background: linear-gradient(135deg, #f6d365, #fda085);
+    position: relative;
+    height: 320px;
+    background: linear-gradient(120deg, #2ec4c6, #1f8f92);
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 2rem;
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 40px;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
 }
 
 .hero-content {
-    background: rgba(255, 255, 255, 0.85);
-    padding: 3rem 2rem;
-    border-radius: 20px;
-    max-width: 650px;
-    width: 100%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #333;
-    animation: fadeIn 1.2s ease-in-out;
-}
-
-    .hero h1 span {
-        color: #ff7a7a;
-    }
-
-.hero p {
-    font-size: 1.3rem;
-    color: #555;
-}
-
-/* MISSION SECTION */
-.mission {
-    background: #fff6f1;
-    padding: 4rem 2rem;
+    position: relative;
     text-align: center;
 }
 
-    .mission h2 {
-        font-size: 2.4rem;
-        margin-bottom: 1.5rem;
-        color: #333;
-    }
+.hero span {
+    color: #ffb703;
+}
 
-    .mission p {
-        max-width: 800px;
-        margin: 0 auto 1rem auto;
-        font-size: 1.1rem;
-        color: #555;
-        line-height: 1.7;
-    }
+.btn-hero {
+    background-color: #ffb703;
+    color: #2b2b2b;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 10px 26px;
+}
 
+
+/* MISSION SECTION */
+.mission {
+    margin-top: 60px;
+    text-align: center;
+}
+
+/* ===== MISSION BACKGROUND ENHANCEMENT ===== */
+.mission {
+    padding: 60px 20px;
+    background: linear-gradient( 120deg, rgba(46, 196, 198, 0.08), rgba(255, 183, 3, 0.08) );
+    border-radius: 24px;
+}
+
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.mission-card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    font-weight: 500;
+}
 
 
 /* ANIMATION */
@@ -87,4 +95,15 @@ html, body {
     .mission h2 {
         font-size: 2rem;
     }
+}
+
+
+
+/* ===== TOP POSTS BACKGROUND ===== */
+.top-posts {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin: 40px auto;
 }
