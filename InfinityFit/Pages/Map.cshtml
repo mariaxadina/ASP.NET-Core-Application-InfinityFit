@@ -1,80 +1,101 @@
 ﻿@page
 @model InfinityFit.Pages.Map.MapModel
 @{
-    ViewData["Title"] = "Map Search";
+    ViewData["Title"] = "Map";
 }
-<h2>Search Photos by Map</h2>
 
-<div id="map" style="height: 500px;"></div>
+<h2 style="text-align:center;">📸 Discover places with one click </h2>
+
+<div id="map" style="height: 500px; margin-bottom:20px;"></div>
+
+<h3 style="text-align:center;">Click on the map to view photos from that place</h3>
+<div id="photosContainer" class="photos-grid"></div>
+
+<style>
+    .photos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .photo-card {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        background: white;
+        text-align: center;
+    }
+
+        .photo-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .photo-card .info {
+            padding: 8px;
+            font-size: 14px;
+        }
+</style>
 
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-    var map = L.map('map').setView([45.9432, 24.9668], 6); // România default
+        var map = L.map('map').setView([45.9432, 24.9668], 6);
 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-    const Costum_Icon = L.icon ({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
+        let markersLayer = L.layerGroup().addTo(map);
+        let clickMarker = null;
 
-    });
+        map.on('click', async function (e) {
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+            markersLayer.clearLayers();
 
-    map.on('click', function (e) {
-        const lat = e.latlng.lat;
-        const lon = e.latlng.lng;
-        window.location.href = `?lat=${lat}&lon=${lon}`;
-    });
+            if (clickMarker) {
+                map.removeLayer(clickMarker);
+            }
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
+            clickMarker = L.marker([lat, lon]).addTo(map);
 
-            const userLat = position.coords.latitude;
-            const userLon = position.coords.longitude;
+            const response = await fetch(`?handler=NearbyPhotos&lat=${lat}&lon=${lon}`);
+            const photos = await response.json();
 
-            map.setView([userLat, userLon], 15);
-            L.marker([userLat, userLon]).addTo(map).bindPopup("You are here").openPopup();
+            const container = document.getElementById("photosContainer");
+            container.innerHTML = "";
 
-            (async function() {
-                try {
-                    const response = await fetch(`/Map?handler=NearbyPlaces&lat=${userLat}&lon=${userLon}`);
-                    const data = await response.json();
+            if (photos.length === 0) {
+                container.innerHTML = "<p>There are no posts from this location.</p>";
+                return;
+            }
 
-                    if (!data.features) {
-                        console.log("Eroare call api");
-                        return;
-                    }
+            photos.forEach(p => {
+                L.marker([p.latitude, p.longitude]).addTo(markersLayer);
 
-                    data.features.forEach(location => {
-                        const coords = location.geometry.coordinates; // [lon, lat]
-                        const name = location.properties.name || "Loc misterios";
-                        const address = location.properties.formatted;
-
-                        L.marker([coords[1], coords[0]], {icon:Costum_Icon})
-                            .addTo(map)
-                            .bindPopup(`<strong>${name}</strong><br>${address}`);
-                    });
-
-                } catch (err) {
-                    console.error("Error fetching nearby places:", err);
-                }
-            })();
-
-        }, function (error) {
-            console.warn("Geolocation error: ", error.message);
+                container.innerHTML += `
+                    <div class="photo-card">
+                        <img src="${p.imagePath}" />
+                        <div class="info">
+                            <strong>${p.title ?? ""}</strong><br/>
+                            ❤️ ${p.likesCount}
+                        </div>
+                    </div>
+                `;
+            });
         });
-    } else {
-        console.warn("Geolocation is not supported by this browser.");
-    }
-</script>
 
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (pos) {
+                map.setView([pos.coords.latitude, pos.coords.longitude], 13);
+            });
+        }
+    </script>
 }
