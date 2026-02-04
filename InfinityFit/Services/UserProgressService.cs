@@ -1,17 +1,20 @@
 ﻿using InfinityFit.Data;
 using InfinityFit.Models;
 using InfinityFit.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 public class UserProgressService
 {
     private readonly ApplicationDbContext _db;
     private readonly BadgeService _badgeService;
+    private readonly VoucherService _voucherService;
 
-    public UserProgressService(ApplicationDbContext db, BadgeService badgeService)
+    public UserProgressService(ApplicationDbContext db, VoucherService voucherService, BadgeService badgeService)
     {
         _db = db;
         _badgeService = badgeService;
+        _voucherService = voucherService;
     }
 
 
@@ -34,6 +37,10 @@ public class UserProgressService
         {
             user.Level = newLevel;
             user.LastLevelUp = DateTime.UtcNow;
+
+            // atribuie un voucher random
+            var voucher = await _voucherService.AssignRandomVoucherAsync(user);
+
         }
 
         _db.Users.Update(user);

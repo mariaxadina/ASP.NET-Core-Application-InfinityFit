@@ -31,6 +31,7 @@ public class Program
         builder.Services.AddScoped<LeaderboardService>();
         builder.Services.AddScoped<UserProgressService>();
         builder.Services.AddScoped<MonthlyChallengeService>();
+        builder.Services.AddScoped<VoucherService>();
 
 
         var app = builder.Build();
