@@ -1,6 +1,4 @@
-﻿body {
-}
-/* Page background */
+﻿/* ===== BODY + PAGE BACKGROUND ===== */
 .feed-page {
     background-color: #cce7ff; /* light blue */
     min-height: 100vh;
@@ -8,15 +6,121 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* TITLU FEED */
 .feed-title {
-    font-family: 'Luckiest Guy', cursive; /* playful font, Google Fonts recommended */
+    font-family: 'Luckiest Guy', cursive;
     font-size: 2.8rem;
-    color: #ff6f61; /* energetic coral color */
+    color: #ff6f61;
     text-align: center;
-    text-shadow: 2px 2px #ffffff70, 0 0 10px #ff6f61; /* subtle glow/shadow */
+    text-shadow: 2px 2px #ffffff70, 0 0 10px #ff6f61;
     margin-bottom: 2rem;
 }
+
+/* CARD-URI POSTĂRI */
+.feed-page .card {
+    max-width: 500px;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.95); /* semi-transparent */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .feed-page .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+
+/* CARD HEADER */
+.feed-page .card-header {
+    background: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+    .feed-page .card-header a {
+        color: #1f8f92;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .feed-page .card-header a:hover {
+            text-decoration: underline;
+        }
+
+/* CARD BODY */
+.feed-page .card-body {
+    padding: 12px 16px;
+}
+
+    .feed-page .card-body h6 {
+        font-weight: 700;
+        color: #2b2b2b;
+    }
+
+    .feed-page .card-body p {
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+/* LIKE & COMMENT BUTTONS */
+.feed-page button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2ec4c6;
+    font-weight: 600;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+    .feed-page button:hover {
+        color: #1f8f92;
+        transform: scale(1.1);
+    }
+
+/* SEE LOCATION LINK */
+.feed-page a.text-primary {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+    .feed-page a.text-primary:hover {
+        color: #ffb703;
+        text-decoration: underline;
+    }
+
+/* IMAGINI CARD */
+.feed-page .card-img-top {
+    width: 100%;
+    height: auto; /* păstrează proporțiile reale */
+    object-fit: contain; /* afișează complet poza */
+    border-radius: 12px 12px 0 0;
+}
+
+/* TOAST ERORI COMMENTARII */
+#commentToast .toast-header {
+    font-weight: 600;
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
+    .feed-page {
+        padding: 1rem;
+    }
+
+        .feed-page .card-header {
+            font-size: 0.85rem;
+        }
+
+        .feed-page .card-body p {
+            font-size: 0.85rem;
+        }
+
     .feed-title {
         font-size: 2.2rem;
     }

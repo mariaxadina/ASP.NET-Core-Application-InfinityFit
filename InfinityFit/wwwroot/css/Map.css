@@ -1,0 +1,10 @@
+﻿/* ========================= */
+/* MAP PAGE STYLING           */
+/* ========================= */
+
+/* Harta */
+#map {
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 2px solid #1f8f92;
+}

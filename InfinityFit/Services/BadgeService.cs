@@ -133,28 +133,28 @@ namespace InfinityFit.Services
             int commentsCount = await _db.Comments
                 .CountAsync(p => p.UserId == userId);
 
-            if (likesCount >= 1)
+            if (commentsCount >= 1)
                 await AwardBadgeByNameAsync(userId, "First Words");
 
-            if (likesCount >= 5)
+            if (commentsCount >= 5)
                 await AwardBadgeByNameAsync(userId, "Conversationalist");
 
-            if (likesCount >= 15)
+            if (commentsCount >= 15)
                 await AwardBadgeByNameAsync(userId, "Active Voice");
 
-            if (likesCount >= 50)
+            if (commentsCount >= 50)
                 await AwardBadgeByNameAsync(userId, "Discussion Leader");
 
-            if (likesCount >= 100)
+            if (commentsCount >= 100)
                 await AwardBadgeByNameAsync(userId, "Community Speaker");
 
-            if (likesCount >= 250)
+            if (commentsCount >= 250)
                 await AwardBadgeByNameAsync(userId, "Debater Pro");
 
-            if (likesCount >= 500)
+            if (commentsCount >= 500)
                 await AwardBadgeByNameAsync(userId, "Social Anchor");
 
-            if (likesCount >= 1000)
+            if (commentsCount >= 1000)
                 await AwardBadgeByNameAsync(userId, "Voice of Infinity");
 
         }

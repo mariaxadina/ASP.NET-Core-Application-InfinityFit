@@ -75,3 +75,185 @@
             font-weight: bold;
         }
 }
+
+
+/* ========================= */
+/* ✨ LEADERBOARD EXTRAS */
+/* (SAFE ADD-ONS – NU MODIFICĂ CSS-UL EXISTENT) */
+/* ========================= */
+
+/* Hover subtil pe rânduri */
+.custom-leaderboard tbody tr:hover td {
+    box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.03);
+    transition: background-color 0.15s ease;
+}
+
+/* Evidențiere user curent (opțional – adaugi clasa din Razor) */
+.custom-leaderboard .current-user td {
+    outline: 2px dashed #1f8f92;
+    outline-offset: -4px;
+    font-weight: 600;
+}
+
+/* Header mai modern */
+.custom-leaderboard thead th {
+    background: linear-gradient(90deg, #2ec4c6, #1f8f92);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* Animație light la încărcare */
+.custom-leaderboard tbody tr {
+    animation: fadeInUp 0.3s ease both;
+}
+
+    .custom-leaderboard tbody tr:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    .custom-leaderboard tbody tr:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .custom-leaderboard tbody tr:nth-child(3) {
+        animation-delay: 0.15s;
+    }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mic polish pe mobile (fără să atingă podiumul) */
+@media (max-width: 768px) {
+    .custom-leaderboard tbody tr {
+        background-color: #ffffff;
+    }
+
+        .custom-leaderboard tbody tr:not(.rank-1):not(.rank-2):not(.rank-3) {
+            background-color: #fafafa;
+        }
+}
+
+
+/* ========================= */
+/* 📱 MOBILE – CARD STYLE */
+/* ========================= */
+@media (max-width: 768px) {
+
+    /* Ascundem headerul */
+    .custom-leaderboard thead {
+        display: none;
+    }
+
+    /* Fiecare rând devine un card */
+    .custom-leaderboard tbody tr {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-bottom: 14px;
+        padding: 12px;
+        border-radius: 14px;
+        border: 1px solid #e0e0e0;
+        background: #ffffff;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+        animation: fadeInUp 0.3s ease both;
+    }
+
+    /* Podium cards – păstrăm identitatea */
+    .rank-1 {
+        border-left: 6px solid #FFD700;
+    }
+
+    .rank-2 {
+        border-left: 6px solid #C0C0C0;
+    }
+
+    .rank-3 {
+        border-left: 6px solid #CD7F32;
+    }
+
+    /* Celule */
+    .custom-leaderboard tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 0;
+        font-size: 0.95rem;
+    }
+
+        /* Rank (#) */
+        .custom-leaderboard tbody td:first-child {
+            font-size: 1.4rem;
+            font-weight: bold;
+            justify-content: center;
+            color: #333;
+        }
+
+    /* Username */
+    .username-cell {
+        font-size: 1.05rem;
+        font-weight: 600;
+        justify-content: space-between;
+    }
+
+    /* Label-uri pentru claritate */
+    .custom-leaderboard tbody td:nth-child(2)::before {
+        content: "User";
+        font-weight: 500;
+        color: #888;
+    }
+
+    .custom-leaderboard tbody td:nth-child(3)::before {
+        content: "Engagement";
+        font-weight: 500;
+        color: #888;
+    }
+}
+
+
+
+/* ========================= */
+/* 🔥 LEADERBOARD FILTER */
+/* ========================= */
+
+.leaderboard-filter {
+    appearance: none;
+    background: linear-gradient(135deg, #2ec4c6, #1f8f92);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 40px 10px 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(31, 143, 146, 0.35);
+    transition: all 0.25s ease;
+}
+
+/* Săgeată custom */
+.leaderboard-filter {
+    background-image: linear-gradient(135deg, #2ec4c6, #1f8f92), url("data:image/svg+xml,%3Csvg fill='white' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 7.5l4.5 4.5 4.5-4.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: auto, 14px;
+}
+
+    .leaderboard-filter:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(31, 143, 146, 0.45);
+    }
+
+    .leaderboard-filter:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(46, 196, 198, 0.35);
+    }

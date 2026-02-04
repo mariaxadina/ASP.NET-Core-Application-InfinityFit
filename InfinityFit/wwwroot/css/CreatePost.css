@@ -1,0 +1,98 @@
+﻿/* ============================= */
+/* CREATE POST PAGE STYLING      */
+/* ============================= */
+
+.create-post-page {
+    max-width: 700px;
+    margin: 2rem auto;
+    font-family: 'Segoe UI', sans-serif;
+    color: #2b2b2b;
+}
+
+    .create-post-page h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #2ec4c6;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Form container */
+    .create-post-page form {
+        background: rgba(255,255,255,0.95);
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+        margin-bottom: 2rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .create-post-page form:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.18);
+        }
+
+    /* Labels */
+    .create-post-page label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+        color: #1f8f92;
+    }
+
+    /* Inputs & Textarea */
+    .create-post-page input[type="text"],
+    .create-post-page input[type="file"],
+    .create-post-page input[type="number"],
+    .create-post-page textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+    }
+
+        .create-post-page input:focus,
+        .create-post-page textarea:focus {
+            outline: none;
+            border-color: #2ec4c6;
+            box-shadow: 0 0 8px rgba(46,196,198,0.3);
+        }
+
+    /* Button */
+    .create-post-page button.btn-primary {
+        width: 100%;
+        background: linear-gradient(135deg, #2ec4c6, #1f8f92);
+        color: white;
+        font-weight: 600;
+        padding: 10px 0;
+        border-radius: 20px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+        .create-post-page button.btn-primary:hover {
+            background: linear-gradient(135deg, #1f8f92, #2ec4c6);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(46,196,198,0.4);
+        }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .create-post-page {
+        padding: 0 1rem;
+        margin: 1rem auto;
+    }
+
+        .create-post-page h1 {
+            font-size: 2rem;
+        }
+
+        .create-post-page button.btn-primary {
+            font-size: 1rem;
+            padding: 8px 0;
+        }
+}

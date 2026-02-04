@@ -1,7 +1,20 @@
 ﻿@page
 @model InfinityFit.Pages.FeedModel
 
+
+
 <link rel="stylesheet" href="~/css/Feed.css" />
+
+<style>
+    .content-card {
+        background: rgba(255, 255, 255, 0.0); /* complet transparent */
+        box-shadow: none; /* elimină umbra */
+        padding: 24px; /* păstrează padding-ul dacă vrei */
+    }
+</style>
+
+
+
 <div class="feed-page">
     <h2 class="feed-title">Feed</h2>
 
@@ -40,7 +53,7 @@
 
                 <img src="@post.ImagePath"
                      class="card-img-top"
-                     style="max-height: 300px; object-fit: cover;" />
+                     style="object-fit: cover;" />
 
                 <div class="card-body py-2">
                     @if (!string.IsNullOrEmpty(post.Title))

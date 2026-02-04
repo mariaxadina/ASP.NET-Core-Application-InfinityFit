@@ -1,37 +1,53 @@
 ﻿@page
 @model InfinityFit.Areas.Identity.Pages.Account.Location_of_the_DayModel
 
-<h2>Location of the Day</h2>
+<style>
+    .content-card {
+        background: rgba(255, 255, 255, 0.0); /* complet transparent */
+        box-shadow: none; /* elimină umbra */
+        padding: 24px; /* păstrează padding-ul dacă vrei */
+    }
+</style>
 
-@if (TempData["StatusMessage"] != null)
-{
-    <div class="alert alert-info">@TempData["StatusMessage"]</div>
-}
 
-<form method="post">
-    <label>Daily Distance Goal (km)</label>
-    <input asp-for="DailyDistanceGoal" class="form-control" type="number" step="0.1" />
-    <button type="submit" class="btn btn-primary mt-2">Save Goal</button>
-</form>
+<link rel="stylesheet" href="~/css/DailyLocation.css" />
 
-<hr />
 
-<form method="post" asp-page-handler="GetLocation" id="locationForm">
-    <input type="hidden" id="Latitude" name="Latitude" />
-    <input type="hidden" id="Longitude" name="Longitude" />
+<div class="location-page">
+    <h2>📍 Location of the Day</h2>
 
-    <button type="button" id="getLocationBtn" class="btn btn-success">
-        📍 Get Location of the Day
-    </button>
-</form>
+    @if (TempData["StatusMessage"] != null)
+    {
+        <div class="alert alert-info">@TempData["StatusMessage"]</div>
+    }
 
-@if (Model.TodayLocation != null)
-{
-    <p><strong>Location:</strong> @Model.TodayLocation.Name</p>
-    <p><strong>Address:</strong> @Model.TodayLocation.Address</p>
+    <form method="post" class="mb-3">
+        <label>Daily Distance Goal (km)</label>
+        <input asp-for="DailyDistanceGoal" class="form-control" type="number" step="0.1" />
+        <button type="submit" class="btn btn-primary mt-2">Save Goal</button>
+    </form>
 
-    <div id="map" style="height:400px;width:100%;"></div>
-}
+    <form method="post" asp-page-handler="GetLocation" id="locationForm" class="mb-3">
+        <input type="hidden" id="Latitude" name="Latitude" />
+        <input type="hidden" id="Longitude" name="Longitude" />
+        <button type="button" id="getLocationBtn" class="btn btn-success btn-location-daily">
+            📍 Get Location of the Day
+        </button>
+    </form>
+
+    @if (Model.TodayLocation != null)
+    {
+        <div class="map-container mb-3">
+            <p><strong>Location:</strong> @Model.TodayLocation.Name</p>
+            <p><strong>Address:</strong> @Model.TodayLocation.Address</p>
+            <div id="map" style="height:400px;width:100%; border-radius:12px;"></div>
+        </div>
+    }
+</div>
+
+
+
+
 
 @section Scripts {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />

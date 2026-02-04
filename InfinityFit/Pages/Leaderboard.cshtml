@@ -4,7 +4,7 @@
 <h2 class="mb-3">🏆 Leaderboard</h2>
 
 <form method="get" class="mb-4">
-    <select asp-for="Type" class="form-select w-auto" onchange="this.form.submit()">
+    <select asp-for="Type" class="form-select leaderboard-filter" onchange="this.form.submit()">
         <option value="Popularity">🔥 Popularity</option>
         <option value="Activity">⚡ Activity</option>
     </select>
