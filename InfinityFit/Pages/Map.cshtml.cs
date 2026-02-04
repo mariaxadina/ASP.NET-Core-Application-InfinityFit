@@ -14,7 +14,7 @@ namespace InfinityFit.Pages.Map
             _context = context;
         }
 
-        public async Task<JsonResult> OnGetNearbyPhotosAsync(double lat, double lon)
+        public async Task<PartialViewResult> OnGetNearbyPhotosAsync(double lat, double lon)
         {
             double radiusKm = 1;
 
@@ -23,22 +23,15 @@ namespace InfinityFit.Pages.Map
 
             var posts = await _context.Posts
                 .Include(p => p.Likes)
+                .Include(p => p.User) // s? poat? afi?a username în PostCard
                 .Where(p =>
                     Math.Abs(p.Latitude - lat) <= latRange &&
                     Math.Abs(p.Longitude - lon) <= lonRange)
                 .OrderByDescending(p => p.Likes.Count)
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Title,
-                    p.ImagePath,
-                    p.Latitude,
-                    p.Longitude,
-                    LikesCount = p.Likes.Count
-                })
                 .ToListAsync();
 
-            return new JsonResult(posts);
+            return Partial("_PostCardsFromMap", posts);
         }
+
     }
 }

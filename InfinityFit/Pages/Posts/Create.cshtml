@@ -1,36 +1,57 @@
-@page
+﻿@page
 @model InfinityFit.Pages.Posts.CreateModel
 @{
     ViewData["Title"] = "Create Post";
 }
 
-<h1>Create a New Post</h1>
 
-<form method="post" enctype="multipart/form-data">
+<link rel="stylesheet" href="~/css/CreatePost.css" />
 
-    <div class="mb-3">
-        <label asp-for="Input.Title" class="form-label"></label>
-        <input asp-for="Input.Title" class="form-control" />
-        <span asp-validation-for="Input.Title" class="text-danger"></span>
-    </div>
 
-    <div class="mb-3">
-        <label asp-for="Input.Description" class="form-label"></label>
-        <textarea asp-for="Input.Description" class="form-control"></textarea>
-        <span asp-validation-for="Input.Description" class="text-danger"></span>
-    </div>
+<style>
+    .content-card {
+        background: rgba(255, 255, 255, 0.0); /* complet transparent */
+        box-shadow: none; /* elimină umbra */
+        padding: 24px; /* păstrează padding-ul dacă vrei */
+    }
+</style>
 
-    <div class="mb-3">
-        <label asp-for="Input.ImageFile" class="form-label">Upload Image</label>
-        <input asp-for="Input.ImageFile" type="file" class="form-control" />
-        <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
-    </div>
 
-    <input asp-for="Input.Latitude" type="hidden" id="latInput" />
-    <input asp-for="Input.Longitude" type="hidden" id="lonInput" />
 
-    <button type="submit" class="btn btn-primary">Create Post</button>
-</form>
+
+<div class="create-post-page">
+
+    
+
+    <form method="post" enctype="multipart/form-data">
+        <h1>Create a New Post</h1>
+
+        <div class="mb-3">
+            <label asp-for="Input.Title" class="form-label"></label>
+            <input asp-for="Input.Title" class="form-control" />
+            <span asp-validation-for="Input.Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Description" class="form-label"></label>
+            <textarea asp-for="Input.Description" class="form-control"></textarea>
+            <span asp-validation-for="Input.Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.ImageFile" class="form-label">Upload Image</label>
+            <input asp-for="Input.ImageFile" type="file" class="form-control" />
+            <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
+        </div>
+
+        <input asp-for="Input.Latitude" type="hidden" id="latInput" />
+        <input asp-for="Input.Longitude" type="hidden" id="lonInput" />
+
+        <button type="submit" class="btn btn-primary">Create Post</button>
+    </form>
+</div>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

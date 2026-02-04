@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="~/css/Post.css" />
 <link rel="stylesheet" href="~/css/Progres.css" />
 <link rel="stylesheet" href="~/css/LevelUp.css" />
+<link rel="stylesheet" href="~/css/Profile.css" />
+
 
 
 @if (TempData["StatusMessage"] != null)
@@ -88,7 +90,7 @@ else
 <a <a class="nav-link text-dark create-post" asp-page="/Posts/Create">➕ Create post</a>
 
 
-
+<p><strong style="color:blue;">Badges:</strong></p>
 
 @if (Model.UserBadges.Count == 0)
 {

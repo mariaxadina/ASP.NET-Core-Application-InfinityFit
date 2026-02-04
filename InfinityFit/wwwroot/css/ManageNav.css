@@ -1,0 +1,61 @@
+﻿/* ========================= */
+/* PROFILE SIDE NAV STYLING   */
+/* ========================= */
+
+/* Containerul ul */
+.nav-pills.flex-column {
+    background: #f8f9fa; /* fundal deschis */
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    width: 100%;
+}
+
+/* Fiecare link */
+.nav-pills .nav-link {
+    color: #495057;
+    font-weight: 500;
+    padding: 10px 16px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    /* Hover */
+    .nav-pills .nav-link:hover {
+        background: linear-gradient(90deg, #2ec4c6, #1f8f92);
+        color: white;
+        transform: translateX(2px);
+    }
+
+    /* Highlight pentru pagina curentă */
+    .nav-pills .nav-link.active,
+    .nav-pills .nav-link.active:hover {
+        background: #1f8f92;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* Optional: iconițe sau nume mai proeminent */
+    .nav-pills .nav-link i {
+        color: #2ec4c6;
+    }
+
+/* Responsive pentru mobile */
+@media (max-width: 768px) {
+    .nav-pills.flex-column {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .nav-pills .nav-link {
+        flex: 0 0 auto;
+        margin-bottom: 0;
+    }
+}

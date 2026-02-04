@@ -1,0 +1,112 @@
+﻿/* ===== Container general ===== */
+.location-page {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #ffffffee; /* puțin mai transparent pentru efect de card */
+    padding: 28px 24px;
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+    .location-page:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(0,0,0,0.2);
+    }
+
+    /* ===== Titlu ===== */
+    .location-page h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 24px;
+        color: #1f8f92;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ===== Alerta ===== */
+    .location-page .alert {
+        border-radius: 14px;
+        padding: 12px 18px;
+        font-weight: 500;
+        background-color: #e0f7fa;
+        color: #00796b;
+    }
+
+    /* ===== Formulare ===== */
+    .location-page form {
+        margin-bottom: 20px;
+    }
+
+    .location-page label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .location-page input[type="number"] {
+        border-radius: 14px;
+        border: 1px solid #ccc;
+        padding: 10px 14px;
+        width: 100%;
+        transition: all 0.25s ease;
+    }
+
+        .location-page input[type="number"]:focus {
+            border-color: #1f8f92;
+            box-shadow: 0 0 8px rgba(31,143,146,0.35);
+            outline: none;
+        }
+
+/* ===== Buton Daily Location ===== */
+.btn-location-daily {
+    background: linear-gradient(135deg, #2ec4c6, #1f8f92);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 100%;
+    padding: 12px;
+    border-radius: 24px;
+    border: none;
+    box-shadow: 0 6px 16px rgba(46,196,198,0.35);
+    transition: all 0.25s ease;
+}
+
+    .btn-location-daily:hover {
+        background: linear-gradient(135deg, #1f8f92, #2ec4c6);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(46,196,198,0.45);
+    }
+
+/* ===== Info locație ===== */
+.location-info p {
+    font-size: 1rem;
+    margin: 6px 0;
+    font-weight: 500;
+}
+
+/* ===== Harta ===== */
+#map {
+    border-radius: 18px;
+    border: 2px solid #1f8f92;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    margin-top: 16px;
+    transition: all 0.3s ease;
+}
+
+    #map:hover {
+        transform: scale(1.01);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+    .location-page {
+        padding: 16px;
+        margin: 10px;
+    }
+
+    #getLocationBtn, .btn-location-daily {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}

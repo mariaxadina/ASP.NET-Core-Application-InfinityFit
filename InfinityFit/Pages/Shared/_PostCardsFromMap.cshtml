@@ -1,0 +1,10 @@
+﻿@model List<InfinityFit.Models.Post>
+
+<div class="post-grid map-posts">
+@foreach (var post in Model)
+{
+    <partial name="_PostCard"
+             model="post"
+             view-data='new ViewDataDictionary(ViewData) { ["IsMapView"] = true }' />
+}
+</div>
