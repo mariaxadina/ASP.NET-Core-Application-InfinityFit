@@ -17,6 +17,7 @@ namespace InfinityFit.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<LeaderboardEntry> LeaderboardEntries { get; set; }
 
         public DbSet<DailyLocation> DailyLocations { get; set; }
@@ -280,6 +281,53 @@ namespace InfinityFit.Data
                 }
 
             );
+
+
+            builder.Entity<Voucher>().HasData(
+                new Voucher
+                {
+                    Id = 1,
+                    Name = "10% Reducere Muzeu",
+                    Description = "Reducere de 10% la intrarea la muzeu",
+                },
+                new Voucher
+                {
+                    Id = 2,
+                    Name = "15% Reducere Landmark",
+                    Description = "Reducere de 15% la un landmark turistic",
+                },
+                new Voucher
+                {
+                    Id = 3,
+                    Name = "20% Reducere Restaurant",
+                    Description = "Reducere de 20% la restaurantul partener",
+                },
+                new Voucher
+                {
+                    Id = 4,
+                    Name = "25% Reducere Tur",
+                    Description = "Reducere de 25% la turul ghidat al orașului",
+                },
+                new Voucher
+                {
+                    Id = 5,
+                    Name = "30% Reducere Adventure Park",
+                    Description = "Reducere de 30% la parcul de aventură",
+                },
+                new Voucher
+                {
+                    Id = 6,
+                    Name = "35% Reducere Adventure Park",
+                    Description = "Reducere de 35% la parcul de aventură",
+                },
+                new Voucher
+                {
+                    Id = 7,
+                    Name = "40% Reducere Cazare",
+                    Description = "Reducere de 40% la o cazare parteneră",
+                }
+            );
+
         }
     }
 }

@@ -15,7 +15,8 @@ namespace InfinityFit.Models
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public ICollection<Like> Likes { get; set; } = new List<Like>();
         public ICollection<UserBadge> UserBadges { get; set; } = new List<UserBadge>();
+        public ICollection<Voucher> Vouchers { get; set; } = new List<Voucher>();
 
-      
+
     }
 }

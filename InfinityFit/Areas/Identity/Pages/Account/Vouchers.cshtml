@@ -6,30 +6,41 @@
 
 <link rel="stylesheet" href="~/css/Vouchers.css" />
 
+<style>
+    .content-card {
+        background: rgba(255, 255, 255, 0.0); /* complet transparent */
+        box-shadow: none; /* elimină umbra */
+        padding: 24px; /* păstrează padding-ul dacă vrei */
+    }
+</style>
+
+
 <div class="vouchers-page">
     <div class="vouchers-hero">
-        <h1 class="dynamic-title">🎁 Welcome to your Vouchers!</h1>
+        <h1 class="dynamic-title">🎁 Your Vouchers</h1>
     </div>
 
     <div class="vouchers-content">
-        <p>Track your progress, collect badges, and unlock rewards! 💪</p>
-
-        <div class="voucher-cards">
-            <div class="voucher-card">
-                <h3>10k Steps Badge</h3>
-                <p>Walk 10,000 steps in a day and earn this badge.</p>
+        @if (!Model.UserVouchers.Any())
+        {
+            <p>You don't have any vouchers yet. Keep leveling up! 💪</p>
+        }
+        else
+        {
+            <div class="voucher-cards">
+                @foreach (var voucher in Model.UserVouchers)
+                {
+                    <div class="voucher-card">
+                        <h3>@voucher.Name</h3>
+                        <p>@voucher.Description</p>
+                        <p class="voucher-code">Code: <strong>@voucher.Code</strong></p>
+                    </div>
+                }
             </div>
-            <div class="voucher-card">
-                <h3>Landmark Explorer</h3>
-                <p>Visit 5 landmarks and unlock a 10% voucher for your next activity.</p>
-            </div>
-            <div class="voucher-card">
-                <h3>Fitness Star</h3>
-                <p>Complete 7 exercises this week and get a reward!</p>
-            </div>
-        </div>
+        }
     </div>
 </div>
+
 
 @section Scripts {
     <script>
