@@ -1,11 +1,15 @@
-﻿/* REMOVE DEFAULT SPACING */
+﻿/* =========================
+   REMOVE DEFAULT SPACING
+========================= */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-/* HERO SECTION */
+/* =========================
+   HERO SECTION
+========================= */
 .hero {
     position: relative;
     height: 320px;
@@ -42,20 +46,54 @@ html, body {
     padding: 10px 26px;
 }
 
+/* =========================
+   TOP POSTS
+========================= */
+.top-posts {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin: 40px auto;
+}
 
-/* MISSION SECTION */
+/* grid container pentru cardurile de top posts */
+.top-posts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* centrează pe orizontală */
+}
+
+    /* cardurile în sine */
+    .top-posts-grid .card {
+        flex: 0 0 30%; /* ocupă ~30% din lățime pe desktop */
+        min-width: 250px; /* să nu fie prea strâns */
+        max-width: 300px; /* limitează maximul */
+    }
+
+        /* imaginea din card */
+        .top-posts-grid .card img.card-img-top {
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+    /* card body */
+    .top-posts-grid .card-body {
+        padding: 10px 12px;
+    }
+
+/* =========================
+   MISSION SECTION
+========================= */
 .mission {
     margin-top: 60px;
     text-align: center;
-}
-
-/* ===== MISSION BACKGROUND ENHANCEMENT ===== */
-.mission {
     padding: 60px 20px;
-    background: linear-gradient( 120deg, rgba(46, 196, 198, 0.08), rgba(255, 183, 3, 0.08) );
+    background: linear-gradient(120deg, rgba(46, 196, 198, 0.08), rgba(255, 183, 3, 0.08));
     border-radius: 24px;
 }
-
 
 .mission-grid {
     display: grid;
@@ -72,8 +110,9 @@ html, body {
     font-weight: 500;
 }
 
-
-/* ANIMATION */
+/* =========================
+   ANIMATIONS
+========================= */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -86,7 +125,15 @@ html, body {
     }
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1024px) {
+    .top-posts-grid .card {
+        flex: 0 0 45%; /* două pe rând pe tablet */
+    }
+}
+
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.2rem;
@@ -95,15 +142,10 @@ html, body {
     .mission h2 {
         font-size: 2rem;
     }
-}
 
-
-
-/* ===== TOP POSTS BACKGROUND ===== */
-.top-posts {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(4px);
-    border-radius: 20px;
-    padding: 30px 20px;
-    margin: 40px auto;
+    /* top posts pe mobil: 1 pe rând */
+    .top-posts-grid .card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
